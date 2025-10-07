@@ -11,12 +11,8 @@ int main() {
         printf("|| 3.Fixes "); 
         printf("|| 0.Quitter ||");
         printf("\n  ===================================================\n");
-        printf("|| Choix1: ");
-        printf(" Choix2: ");
-        fflush(stdout);
-        printf("|| Choix3: ");
-        printf(" Choix4: ");
-        printf("|| Choix5: ");
+        printf("|| Choix1");
+        printf(": "); 
         scanf("%d", &choix);
 
         switch (choix) {
