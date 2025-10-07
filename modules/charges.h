@@ -1,7 +1,8 @@
 #ifndef CHARGES_H
 #define CHARGES_H
 
-#define CHARGES_FIXES_FILE "VOLA/data/charges_fixes.csv"
+#define CHARGES_FIXES_FILE "data/charges_fixes.csv"
+// #define CHARGES_FIXES_FILE "VOLA/data/charges_fixes.csv"
 
 #include <stdio.h>
 #include <stdlib.h> 
