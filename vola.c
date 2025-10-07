@@ -10,8 +10,9 @@ int main() {
         printf("|| 2.Historique ");
         printf("|| 3.Fixes "); 
         printf("|| 0.Quitter ||");
-        printf("\n  ===================================================\n|| Choix: ");
-        // printf("|| Choix: ");
+        printf("\n  ===================================================\n");
+        fflush(stdout);
+        printf("|| Choix: ");
         scanf("%d", &choix);
 
         switch (choix) {
