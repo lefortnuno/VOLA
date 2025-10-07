@@ -1,0 +1,14 @@
+# Ignorer tout
+*
+
+# Sauf ces fichiers
+!.gitignore
+!vola.c 
+!data/
+!data/depenses.csv
+!data/charges_fixes.csv
+!Makefile
+!README.md
+!modules/
+!modules/*.c 
+!modules/*.h 
