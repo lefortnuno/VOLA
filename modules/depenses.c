@@ -69,8 +69,8 @@ void afficher_depenses(time_t date_ref) {
         strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
 
         printf("  =================================\n");
-        printf("||              DEPENSE   \n");
-        printf("||           DE LA SEMAINE \n");
+        printf("||              DEPENSE        ||\n");
+        printf("||           DE LA SEMAINE     ||\n");
 
         if (strcmp(debut_str, fin_str) == 0) { 
             char jour_debut[3], jour_fin[3];
@@ -153,11 +153,11 @@ void afficher_depenses(time_t date_ref) {
             printf("   Aucune depense cette semaine.\n");
         } else { 
             printf("\n  =================================\n");
-            printf("||  TOTAL GENERAL                  ||\n");
+            printf("||           SYNTHESE DENERALE        ||\n");
             printf("  =================================\n");
-            printf("Nombre   : %4d depenses \n", depenses_trouvees);
-            printf("Total    :  \033[1;36m%8.2f\033[0m dhs  \n", total);
-            printf("===================================\n");
+            printf("|| Nombre   :  %4d depenses         ||\n", depenses_trouvees);
+            printf("|| Total    :  \033[1;36m%8.2f\033[0m dhs        ||\n", total);
+            printf("  =================================\n");
         }
  
         // Menu navigation semaine avec validation
