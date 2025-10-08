@@ -52,7 +52,6 @@ void choix_invalide(){
     printf("\033[1;31m"); // rouge vif
     printf("\n  -----------------------------------------\n");
     printf("||    Choix invalide, veuillez reessayer ! ||\n");
-    printf("  -----------------------------------------\n");
-    printf("|| Choix: "); 
-    printf("\033[0m"); // réinitialise la couleur 
+    printf("  -----------------------------------------\n"); 
+    printf("\033[0m"); // réinitialise la couleur  
 }

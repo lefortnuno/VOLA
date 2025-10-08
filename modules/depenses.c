@@ -41,8 +41,8 @@ void afficher_depenses(time_t date_ref) {
     time_t date_now = date_ref;
     int choix_semaine;
     do {
-        // system("cls"); 
-        printf("\033[2J\033[H"); 
+        system("cls"); 
+        // printf("\033[2J\033[H"); 
 
         struct tm tm_ref = *localtime(&date_ref);
         int wday = tm_ref.tm_wday; // dimanche=0
@@ -158,7 +158,7 @@ void afficher_depenses(time_t date_ref) {
             printf("|| 1.Precedente ");
             printf("|| 2.Actuelle ");
             printf("|| 3.Suivante "); 
-            printf("|| 0.Menu ||");
+            printf("|| 0.Menu||");
             printf("\n  ====================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
