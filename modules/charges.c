@@ -217,7 +217,7 @@ void afficher_les_charges() {
             printf("Dette    : %8.2f dhs\n", dette);
             printf("------------------------------------------\n");
             double total_charges = loyer + wifi + tram + redal + iruno;
-            printf("Total    : %8.2f dhs\n", total_charges);
+            printf("Total    : \033[1;36m%8.2f\033[0m dhs\n", total_charges);
             
             // Calculer les dépenses du mois
             double total_depenses_mois = 0.0;
@@ -240,14 +240,14 @@ void afficher_les_charges() {
                 
                 printf("\n  CHARGES VARIABLES\n");
                 printf("------------------------------------------\n");
-                printf("Total    : %8.2f dhs\n", total_depenses_mois);
-                printf("Nombre   : %8d depenses\n", nb_depenses);
+                printf("Nombre   : %4d depenses\n", nb_depenses);
+                printf("Total    : \033[1;36m%8.2f\033[0m dhs\n", total_depenses_mois);
                 
                 // Total général (charges + dépenses)
                 double total_general = total_charges + total_depenses_mois;
                 printf("\n  TOTAL GENERAL\n");
                 printf("==========================================\n");
-                printf("Fixes + Variables : %8.2f dhs\n", total_general);
+                printf("Fixes + Variables : \033[1;36m%8.2f\033[0m dhs\n", total_general);
                 printf("==========================================\n");
             } else {
                 printf("\n  Aucune depense ce mois.\n");
