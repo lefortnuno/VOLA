@@ -10,7 +10,11 @@ void add_depense() {
         scanf("%s", input);
         if (tolower(input[0]) == 'q') {
             printf("✅ Fin de saisie.\n");
-            afficher_depenses();
+            
+            // Ajouter cette ligne pour passer la date actuelle
+            time_t maintenant = time(NULL);
+            afficher_depenses(maintenant);
+
             break;
         }
         double montant = atof(input);
@@ -32,82 +36,149 @@ void add_depense() {
     }
 }
 
-void afficher_depenses() {
-    FILE *f = fopen(DEPENSES_FILE, "r");
-    if (!f) { printf("Aucune depense enregistree.\n"); return; }
 
-    char line[256]; double total = 0.0;
-    printf("\n=== HISTORIQUE DES DEPENSES ===\n");
-    while (fgets(line, sizeof(line), f)) {
-        char date[20], heure[20]; double montant;
-        sscanf(line, "%[^,],%[^,],%lf", date, heure, &montant);
-        char date_fmt[50], heure_fmt[20];
-        format_date_affichage(date, date_fmt, sizeof(date_fmt));
-        format_heure_affichage(heure, heure_fmt, sizeof(heure_fmt));
-        printf("%s %s -> %.2f\n", date_fmt, heure_fmt, montant);
-        total += montant;
-    }
-    fclose(f);
-    printf("=== Total global : %.2f ===\n\n", total);
-}
+void afficher_depenses(time_t date_ref) {
+    time_t date_now = date_ref;
+    int choix_semaine;
+    do {
+        // system("cls"); 
+        printf("\033[2J\033[H"); 
 
-void afficher_depenses_mensuelles() {
-    FILE *f = fopen(DEPENSES_FILE, "r");
-    if (!f) { printf("Aucune depense enregistree.\n"); return; }
+        struct tm tm_ref = *localtime(&date_ref);
+        int wday = tm_ref.tm_wday; // dimanche=0
+        int decalage_lundi = (wday == 0) ? -6 : 1 - wday;
+        struct tm tm_debut = tm_ref;
+        tm_debut.tm_mday += decalage_lundi;
+        tm_debut.tm_hour = 0;
+        tm_debut.tm_min = 0;
+        tm_debut.tm_sec = 0;
+        mktime(&tm_debut); // normalise la date
 
-    double totals[13][3000] = {{0}};
-    char line[256];
-    while (fgets(line, sizeof(line), f)) {
-        char date[20], heure[20]; double montant;
-        int y, m, d;
-        sscanf(line, "%[^,],%[^,],%lf", date, heure, &montant);
-        sscanf(date, "%d-%d-%d", &y, &m, &d);
-        if (y >= 2000 && y < 5000 && m >= 1 && m <= 12)
-            totals[m][y - 2000] += montant;
-    }
-    fclose(f);
+        struct tm tm_fin = tm_debut;
+        tm_fin.tm_mday += 6;
+        tm_fin.tm_hour = 23;
+        tm_fin.tm_min = 59;
+        tm_fin.tm_sec = 59;
+        mktime(&tm_fin);
 
-    const char *mois_fr[] = {
-        "Janvier","Fevrier","Mars","Avril","Mai","Juin",
-        "Juillet","Aout","Septembre","Octobre","Novembre","Decembre"
-    };
-    printf("\n=== DEPENSES PAR MOIS ===\n");
-    for (int an = 0; an < 3000; an++) {
-        for (int m2 = 1; m2 <= 12; m2++) {
-            if (totals[m2][an] > 0)
-                printf("%s %d : %.2f\n", mois_fr[m2-1], an+2000, totals[m2][an]);
+        // Affichage de la semaine en titre  
+        char debut_str[20], fin_str[20], mois_annee_str[20];
+        char debut_formate[50], fin_formate[50], mois_annee_formate[50];
+
+        // Vérifier si début et fin sont dans le même mois
+        strftime(debut_str, sizeof(debut_str), "%Y-%m", &tm_debut);
+        strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
+
+        if (strcmp(debut_str, fin_str) == 0) { 
+            char jour_debut[3], jour_fin[3];
+            strftime(jour_debut, sizeof(jour_debut), "%d", &tm_debut);
+            strftime(jour_fin, sizeof(jour_fin), "%d", &tm_fin);
+             
+            strftime(mois_annee_str, sizeof(mois_annee_str), "%Y-%m-%d", &tm_fin);
+            format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
+             
+            char *mois_annee_only = strchr(mois_annee_formate, ' ');
+            if (mois_annee_only != NULL) {
+                mois_annee_only++; // sauter le premier espace
+            } else {
+                mois_annee_only = mois_annee_formate;
+            }
+            
+            printf("\n=== DEPENSES du %s -> %s %s ===\n", jour_debut, jour_fin, mois_annee_only);
+            
+        } else {
+            // Mois différents : format complet pour les deux
+            strftime(debut_str, sizeof(debut_str), "%Y-%m-%d", &tm_debut);
+            strftime(fin_str, sizeof(fin_str), "%Y-%m-%d", &tm_fin);
+            
+            format_date_affichage(debut_str, debut_formate, sizeof(debut_formate));
+            format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
+            
+            printf("\n=== DEPENSES du %s -> %s ===\n", debut_formate, fin_formate);
         }
-    }
-    printf("=========================\n\n");
-}
 
-void afficher_depenses_hebdo() {
-    FILE *f = fopen(DEPENSES_FILE, "r");
-    if (!f) { printf("Aucune depense enregistree.\n"); return; }
 
-    double weekly_totals[3000][60] = {{0}};
-    char line[256];
-    while (fgets(line, sizeof(line), f)) {
-        char date[20], heure[20]; double montant;
-        int y, m, d;
-        sscanf(line, "%[^,],%[^,],%lf", date, heure, &montant);
-        sscanf(date, "%d-%d-%d", &y, &m, &d);
-        int week = get_week_number(date);
-        if (y >= 2000 && y < 5000 && week >= 1 && week <= 53)
-            weekly_totals[y - 2000][week] += montant;
-    }
-    fclose(f);
 
-    printf("\n=== DEPENSES PAR SEMAINE ===\n");
-    for (int an = 0; an < 3000; an++) {
-        for (int w = 1; w <= 53; w++) {
-            if (weekly_totals[an][w] > 0) {
-                double total = weekly_totals[an][w];
-                printf("Semaine %02d - %d : %.2f dhs ", w, an+2000, total);
-                printf(total <= 100.0 ? "✅ (dans la limite)\n" :
-                                        "⚠️ DEPASSE la limite de 100 dhs !\n");
+        // Lecture fichier
+        FILE *f = fopen(DEPENSES_FILE, "r");
+        if (!f) { 
+            printf("Aucune depense enregistree.\n"); 
+            return; 
+        }
+
+        char line[256]; 
+        double total = 0.0;
+        int depenses_trouvees = 0;
+        
+        while (fgets(line, sizeof(line), f)) {
+            char date[20], heure[20]; 
+            double montant;
+            
+            // Lecture du format CSV : AAAA-MM-JJ,HH:MM:SS,MONTANT
+            if (sscanf(line, "%10[^,],%8[^,],%lf", date, heure, &montant) == 3) {
+                struct tm tm_dep = {0};
+                // Conversion du format AAAA-MM-JJ
+                sscanf(date, "%d-%d-%d", &tm_dep.tm_year, &tm_dep.tm_mon, &tm_dep.tm_mday);
+                tm_dep.tm_mon -= 1; // Les mois vont de 0 à 11
+                tm_dep.tm_year -= 1900; // Année depuis 1900
+                
+                // Conversion du format HH:MM:SS
+                sscanf(heure, "%d:%d:%d", &tm_dep.tm_hour, &tm_dep.tm_min, &tm_dep.tm_sec);
+                
+                time_t t_dep = mktime(&tm_dep);
+                time_t t_debut = mktime(&tm_debut);
+                time_t t_fin = mktime(&tm_fin);
+
+                if (t_dep >= t_debut && t_dep <= t_fin) {
+                    // Formatage pour l'affichage
+                    char date_fmt[50], heure_fmt[20];
+                    snprintf(date_fmt, sizeof(date_fmt), "%02d/%02d/%04d", 
+                             tm_dep.tm_mday, tm_dep.tm_mon + 1, tm_dep.tm_year + 1900);
+                    snprintf(heure_fmt, sizeof(heure_fmt), "%02d:%02d", 
+                             tm_dep.tm_hour, tm_dep.tm_min);
+                    
+                    printf("%s %s -> %.2f dhs\n", date_fmt, heure_fmt, montant);
+                    total += montant;
+                    depenses_trouvees++;
+                }
             }
         }
-    }
-    printf("============================\n\n");
+        fclose(f);
+
+        if (depenses_trouvees == 0) {
+            printf("Aucune depense cette semaine.\n");
+        } else {
+            printf("=== Total Semaine : %.2f dhs (%d depenses) ===\n", total, depenses_trouvees);
+        }
+ 
+        // Menu navigation semaine avec validation
+        int saisie_valide;
+        do {
+            printf("\n  ====================================================\n");
+            printf("|| 1.Precedente ");
+            printf("|| 2.Actuelle ");
+            printf("|| 3.Suivante "); 
+            printf("|| 0.Menu ||");
+            printf("\n  ====================================================\n");
+            printf("|| Choix: "); 
+            fflush(stdout); 
+            
+            if (scanf("%d", &choix_semaine) != 1) {
+                // Si la saisie n'est pas un nombre, vider le buffer
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF);
+                saisie_valide = 0;
+            } else {
+                saisie_valide = (choix_semaine >= 0 && choix_semaine <= 3);
+            }
+            
+            if (!saisie_valide) {
+                choix_invalide();
+            }
+        } while (!saisie_valide);
+
+        if (choix_semaine == 1) date_ref -= 7 * 24 * 60 * 60;  
+        else if (choix_semaine == 2) date_ref = date_now; 
+        else if (choix_semaine == 3) date_ref += 7 * 24 * 60 * 60;
+    } while (choix_semaine != 0);
 }

@@ -5,11 +5,11 @@
 // #define DEPENSES_FILE "VOLA/data/depenses.csv"
 
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>  
+#include <string.h>
+#include <time.h>
 
-void add_depense();
-void afficher_depenses();
-void afficher_depenses_mensuelles();
-void afficher_depenses_hebdo();
+void add_depense(); 
+void afficher_depenses(time_t date_ref); 
 
 #endif

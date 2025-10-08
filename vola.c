@@ -1,9 +1,11 @@
  
 #include "modules/depenses.h" 
 #include "modules/charges.h" 
+#include "modules/utils.h" 
 
 int main() { 
-    int choix = 0;
+    int choix = 0; 
+    time_t maintenant = time(NULL);
     do {
         printf("\n  ================= GESTION DEPENSES ================\n");
         printf("|| 1.Ajouter ");
@@ -17,8 +19,8 @@ int main() {
 
         switch (choix) {
             case 1: add_depense(); break;
-            case 2: afficher_depenses(); break; 
-            case 5: afficher_depenses_mensuelles(); break; 
+            case 2: afficher_depenses(maintenant); break;  
+            case 3: afficher_charges_fixes(); break;
 
             case 0:
                 printf("\033[1;32m"); // vert vif
@@ -31,11 +33,7 @@ int main() {
 
 
             default:
-                printf("\033[1;31m"); // rouge vif
-                printf("\n  ------------------------------------------\n");
-                printf("||    Choix invalide, veuillez reessayer ! ||\n");
-                printf("  ------------------------------------------\n");
-                printf("\033[0m"); // réinitialise la couleur
+                choix_invalide();
                 break;
 
         }

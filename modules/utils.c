@@ -47,3 +47,12 @@ int get_week_number(const char *date_str) {
     int yday = t.tm_yday + 1;
     return (yday - wday + 10) / 7;
 }
+
+void choix_invalide(){ 
+    printf("\033[1;31m"); // rouge vif
+    printf("\n  -----------------------------------------\n");
+    printf("||    Choix invalide, veuillez reessayer ! ||\n");
+    printf("  -----------------------------------------\n");
+    printf("|| Choix: "); 
+    printf("\033[0m"); // réinitialise la couleur 
+}
