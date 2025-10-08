@@ -250,7 +250,7 @@ void afficher_les_charges() {
                 printf("Fixes + Variables : \033[1;33m%8.2f\033[0m dhs\n", total_general);
                 printf("==========================================\n");
             } else {
-                printf("\n  Aucune depense ce mois.\n");
+                printf("\n   Aucune depense ce mois.\n");
             }
             break;
         }

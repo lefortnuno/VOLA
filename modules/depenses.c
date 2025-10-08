@@ -82,8 +82,11 @@ void afficher_depenses(time_t date_ref) {
             } else {
                 mois_annee_only = mois_annee_formate;
             }
-            
-            printf("\n=== DEPENSES du %s -> %s %s ===\n", jour_debut, jour_fin, mois_annee_only);
+             
+            printf("==========================================\n");
+            printf("  DEPENSE DE LA SEMAINE \n");
+            printf("  %s -> %s %s \n", jour_debut, jour_fin, mois_annee_only);
+            printf("==========================================\n");
             
         } else {
             // Mois différents : format complet pour les deux
@@ -92,8 +95,11 @@ void afficher_depenses(time_t date_ref) {
             
             format_date_affichage(debut_str, debut_formate, sizeof(debut_formate));
             format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
-            
-            printf("\n=== DEPENSES du %s -> %s ===\n", debut_formate, fin_formate);
+             
+            printf("==========================================\n");
+            printf("  DEPENSE DE LA SEMAINE \n");
+            printf("  %s -> %s\n",  debut_formate, fin_formate);
+            printf("==========================================\n");
         }
 
 
@@ -145,9 +151,12 @@ void afficher_depenses(time_t date_ref) {
         fclose(f);
 
         if (depenses_trouvees == 0) {
-            printf("Aucune depense cette semaine.\n");
-        } else {
-            printf("=== Total Semaine : %.2f dhs (%d depenses) ===\n", total, depenses_trouvees);
+            printf("\n   Aucune depense cette semaine.\n");
+        } else { 
+            printf("\n  TOTAL GENERAL\n");
+            printf("==========================================\n");
+            printf("Total: \033[1;33m%8.2f\033[0m dhs (%d depenses)  \n", total, depenses_trouvees);
+            printf("==========================================\n");
         }
  
         // Menu navigation semaine avec validation
