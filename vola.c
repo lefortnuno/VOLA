@@ -7,7 +7,6 @@ int main() {
     int choix = 0; 
     time_t maintenant = time(NULL);
     do {
-        printf("\033[2J\033[H");
         printf("\n  ================= GESTION DEPENSES ================\n");
         printf("|| 1.Ajouter ");
         printf("|| 2.Historique ");
@@ -21,7 +20,10 @@ int main() {
         switch (choix) {
             case 1: add_depense(); break;
             case 2: afficher_depenses(maintenant); break;  
-            case 3: afficher_les_charges(); break;
+            case 3: 
+                printf("\n\033[2J\033[H");
+                afficher_les_charges(); 
+                break;
 
             case 0:
                 printf("\033[2J\033[H");
