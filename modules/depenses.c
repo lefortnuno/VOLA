@@ -69,8 +69,8 @@ void afficher_depenses(time_t date_ref) {
         strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
 
         printf("  =================================\n");
-        printf("||              DEPENSE           ||\n");
-        printf("||           DE LA SEMAINE        ||\n");
+        printf("||              DEPENSE            ||\n");
+        printf("||           DE LA SEMAINE         ||\n");
 
         if (strcmp(debut_str, fin_str) == 0) { 
             char jour_debut[3], jour_fin[3];
@@ -163,12 +163,12 @@ void afficher_depenses(time_t date_ref) {
         // Menu navigation semaine avec validation
         int saisie_valide;
         do {
-            printf("\n  ==================================================\n");
-            printf("|| 1.Precedente ");
+            printf("\n  ====================================================\n");
+            printf("|| 1.Precedent ");
             printf("|| 2.Actuelle ");
-            printf("|| 3.Suivante "); 
-            printf("|| 0.Menu||");
-            printf("\n  ==================================================\n");
+            printf("|| 3.Suivant "); 
+            printf("|| 0.Menu ||");
+            printf("\n  ====================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
             

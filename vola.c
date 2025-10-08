@@ -10,8 +10,8 @@ int main() {
         printf("\n  ================= GESTION DEPENSES ================\n");
         printf("|| 1.Ajouter ");
         printf("|| 2.Historique ");
-        printf("|| 3.Totaux "); 
-        printf("|| 0.Quitter||");
+        printf("|| 3.Total "); 
+        printf("|| 0.Quitter ||");
         printf("\n  ===================================================\n");
         printf("|| Choix: "); 
         fflush(stdout); 
