@@ -114,6 +114,68 @@ void set_charges_fixes() {
     afficher_les_charges();
 }
 
+// void afficher_les_charges() {
+//     printf("\033[2J\033[H"); 
+//     ensure_charges_fixes_current_month();
+//     int mois, annee;
+//     get_current_month_year(&mois, &annee);
+
+//     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
+//     if (!f) { printf("Erreur lecture charges fixes.\n"); return; }
+
+//     printf("\n=== DEPENSES DU MOIS ===\n");
+
+//     char line[256];
+//     fgets(line, sizeof(line), f); // Lire l'en-tête
+//     while (fgets(line, sizeof(line), f)) {
+//         int m, a;
+//         double loyer, wifi, tram, redal, iruno;
+//         sscanf(line, "%d,%d,%lf,%lf,%lf,%lf,%lf",
+//                &m, &a, &loyer, &wifi, &tram, &redal, &iruno);
+//         if (m == mois && a == annee) {
+//             char date_str[50];
+//             snprintf(line, sizeof(line), "%d-%02d-01", a, m);
+//             format_date_affichage(line, date_str, sizeof(date_str));
+//             printf("\n--- Charges Fixes ---\n");
+//             printf("Loyer : %.2f  dhs\nWifi : %.2f  dhs\nTram : %.2f  dhs\nRedal : %.2f  dhs\nIruno : %.2f  dhs\n",
+//                    loyer, wifi, tram, redal, iruno);
+//             double total_charges = loyer + wifi + tram + redal + iruno;
+//             printf("--- Totaux charges fixes: %.2f  dhs\n", total_charges);
+            
+//             // Calculer les dépenses du mois
+//             double total_depenses_mois = 0.0;
+//             int nb_depenses = 0;
+//             FILE *f_depenses = fopen(DEPENSES_FILE, "r");
+//             if (f_depenses) {
+//                 while (fgets(line, sizeof(line), f_depenses)) {
+//                     char date[20], heure[20];
+//                     double montant;
+//                     if (sscanf(line, "%10[^,],%8[^,],%lf", date, heure, &montant) == 3) {
+//                         int annee_dep, mois_dep, jour_dep;
+//                         sscanf(date, "%d-%d-%d", &annee_dep, &mois_dep, &jour_dep);
+//                         if (annee_dep == annee && mois_dep == mois) {
+//                             total_depenses_mois += montant;
+//                             nb_depenses++;
+//                         }
+//                     }
+//                 }
+//                 fclose(f_depenses);
+                
+//                 printf("\n--- Charges Variables ---\n");
+//                 printf("Totaux charges variables: %.2f  dhs (%d depenses)\n", total_depenses_mois, nb_depenses);
+                
+//                 // Total général (charges + dépenses)
+//                 double total_general = total_charges + total_depenses_mois;
+//                 printf("\n--- Total General ---\n");
+//                 printf("Charges fixes + Variables: %.2f  dhs\n", total_general);
+//             } else {
+//                 printf("\nAucune depense ce mois.\n");
+//             }
+//             break;
+//         }
+//     }
+//     fclose(f);
+// }
 void afficher_les_charges() {
     printf("\033[2J\033[H"); 
     ensure_charges_fixes_current_month();
@@ -121,9 +183,19 @@ void afficher_les_charges() {
     get_current_month_year(&mois, &annee);
 
     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
-    if (!f) { printf("Erreur lecture charges fixes.\n"); return; }
+    if (!f) { 
+        printf("❌ Erreur lecture charges fixes.\n"); 
+        return; 
+    }
 
-    printf("\n=== DEPENSES DU MOIS ===\n");
+    // Titre principal avec le mois
+    char mois_annee_str[50];
+    snprintf(mois_annee_str, sizeof(mois_annee_str), "%d-%02d-01", annee, mois);
+    char mois_annee_formate[50];
+    format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
+    
+    printf("\n📊  SYNTHESE DU MOIS : %s\n", mois_annee_formate);
+    printf("==========================================\n");
 
     char line[256];
     fgets(line, sizeof(line), f); // Lire l'en-tête
@@ -133,14 +205,17 @@ void afficher_les_charges() {
         sscanf(line, "%d,%d,%lf,%lf,%lf,%lf,%lf",
                &m, &a, &loyer, &wifi, &tram, &redal, &iruno);
         if (m == mois && a == annee) {
-            char date_str[50];
-            snprintf(line, sizeof(line), "%d-%02d-01", a, m);
-            format_date_affichage(line, date_str, sizeof(date_str));
-            printf("\n--- Charges Fixes ---\n");
-            printf("Loyer : %.2f  dhs\nWifi : %.2f  dhs\nTram : %.2f  dhs\nRedal : %.2f  dhs\nIruno : %.2f  dhs\n",
-                   loyer, wifi, tram, redal, iruno);
+            
+            printf("\n🏠  CHARGES FIXES\n");
+            printf("------------------------------------------\n");
+            printf("Loyer    : %8.2f dhs\n", loyer);
+            printf("Wifi     : %8.2f dhs\n", wifi);
+            printf("Tram     : %8.2f dhs\n", tram);
+            printf("Redal    : %8.2f dhs\n", redal);
+            printf("Iruno    : %8.2f dhs\n", iruno);
+            printf("------------------------------------------\n");
             double total_charges = loyer + wifi + tram + redal + iruno;
-            printf("--- Totaux charges fixes: %.2f  dhs\n", total_charges);
+            printf("Total    : %8.2f dhs\n", total_charges);
             
             // Calculer les dépenses du mois
             double total_depenses_mois = 0.0;
@@ -161,15 +236,19 @@ void afficher_les_charges() {
                 }
                 fclose(f_depenses);
                 
-                printf("\n--- Charges Variables ---\n");
-                printf("Totaux charges variables: %.2f  dhs (%d depenses)\n", total_depenses_mois, nb_depenses);
+                printf("\n🛍️  CHARGES VARIABLES\n");
+                printf("------------------------------------------\n");
+                printf("Total    : %8.2f dhs\n", total_depenses_mois);
+                printf("Nombre   : %8d depenses\n", nb_depenses);
                 
                 // Total général (charges + dépenses)
                 double total_general = total_charges + total_depenses_mois;
-                printf("\n--- Total General ---\n");
-                printf("Charges fixes + Variables: %.2f  dhs\n", total_general);
+                printf("\n💰  TOTAL GENERAL\n");
+                printf("==========================================\n");
+                printf("Fixes + Variables : %8.2f dhs\n", total_general);
+                printf("==========================================\n");
             } else {
-                printf("\nAucune depense ce mois.\n");
+                printf("\n📭 Aucune depense ce mois.\n");
             }
             break;
         }
