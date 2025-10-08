@@ -11,7 +11,7 @@ int main() {
         printf("|| 1.Ajouter ");
         printf("|| 2.Historique ");
         printf("|| 3.Totaux "); 
-        printf("|| 0.Quitter ||");
+        printf("|| 0.Quitter||");
         printf("\n  ===================================================\n");
         printf("|| Choix: "); 
         fflush(stdout); 
