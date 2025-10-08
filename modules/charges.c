@@ -202,19 +202,20 @@ void afficher_les_charges() {
     fgets(line, sizeof(line), f); // Lire l'en-tête
     while (fgets(line, sizeof(line), f)) {
         int m, a;
-        double loyer, wifi, tram, redal, iruno;
+        double loyer, wifi, tram, redal, iruno, dette=0;
         sscanf(line, "%d,%d,%lf,%lf,%lf,%lf,%lf",
                &m, &a, &loyer, &wifi, &tram, &redal, &iruno);
         if (m == mois && a == annee) {
             
             printf("\n  CHARGES FIXES\n");
-            printf("  ------------------------------------------\n");
+            printf("------------------------------------------\n");
             printf("Loyer    : %8.2f dhs\n", loyer);
             printf("Wifi     : %8.2f dhs\n", wifi);
             printf("Tram     : %8.2f dhs\n", tram);
             printf("Redal    : %8.2f dhs\n", redal);
             printf("Iruno    : %8.2f dhs\n", iruno);
-            printf("  ------------------------------------------\n");
+            printf("Dette    : %8.2f dhs\n", dette);
+            printf("------------------------------------------\n");
             double total_charges = loyer + wifi + tram + redal + iruno;
             printf("Total    : %8.2f dhs\n", total_charges);
             
@@ -238,7 +239,7 @@ void afficher_les_charges() {
                 fclose(f_depenses);
                 
                 printf("\n  CHARGES VARIABLES\n");
-                printf("  ------------------------------------------\n");
+                printf("------------------------------------------\n");
                 printf("Total    : %8.2f dhs\n", total_depenses_mois);
                 printf("Nombre   : %8d depenses\n", nb_depenses);
                 
