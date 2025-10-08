@@ -163,12 +163,12 @@ void afficher_depenses(time_t date_ref) {
         // Menu navigation semaine avec validation
         int saisie_valide;
         do {
-            printf("\n  ====================================================\n");
+            printf("\n  ==================================================\n");
             printf("|| 1.Precedent ");
             printf("|| 2.Actuelle ");
             printf("|| 3.Suivant "); 
             printf("|| 0.Menu ||");
-            printf("\n  ====================================================\n");
+            printf("\n  ==================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
             
