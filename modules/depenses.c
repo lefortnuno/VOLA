@@ -87,7 +87,7 @@ void afficher_depenses(time_t date_ref) {
                 mois_annee_only = mois_annee_formate;
             }
               
-            printf("||  %s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
+            printf("||       %s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
             
         } else {
             // Mois différents : format complet pour les deux
@@ -97,7 +97,7 @@ void afficher_depenses(time_t date_ref) {
             format_date_affichage(debut_str, debut_formate, sizeof(debut_formate));
             format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
              
-            printf("||  %s -> %s\n",  debut_formate, fin_formate);
+            printf("||       %s -> %s\n",  debut_formate, fin_formate);
         }
         printf("  =================================\n\n");
 
@@ -153,22 +153,22 @@ void afficher_depenses(time_t date_ref) {
             printf("   Aucune depense cette semaine.\n");
         } else { 
             printf("\n  =================================\n");
-            printf("||  TOTAL GENERAL                ||\n");
+            printf("||  TOTAL GENERAL                  ||\n");
             printf("  =================================\n");
             printf("Nombre   : %4d depenses \n", depenses_trouvees);
             printf("Total    :  \033[1;36m%8.2f\033[0m dhs  \n", total);
-            printf("=================================\n");
+            printf("===================================\n");
         }
  
         // Menu navigation semaine avec validation
         int saisie_valide;
         do {
-            printf("\n  ====================================================\n");
+            printf("\n  ==================================================\n");
             printf("|| 1.Precedente ");
             printf("|| 2.Actuelle ");
             printf("|| 3.Suivante "); 
             printf("|| 0.Menu||");
-            printf("\n  ====================================================\n");
+            printf("\n  ==================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
             
