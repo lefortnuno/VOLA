@@ -68,9 +68,9 @@ void afficher_depenses(time_t date_ref) {
         strftime(debut_str, sizeof(debut_str), "%Y-%m", &tm_debut);
         strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
 
-        printf("=================================\n");
-        printf("       DEPENSE   \n");
-        printf("   DE LA SEMAINE \n");
+        printf("  =================================\n");
+        printf("||              DEPENSE   \n");
+        printf("||           DE LA SEMAINE \n");
 
         if (strcmp(debut_str, fin_str) == 0) { 
             char jour_debut[3], jour_fin[3];
@@ -87,7 +87,7 @@ void afficher_depenses(time_t date_ref) {
                 mois_annee_only = mois_annee_formate;
             }
               
-            printf("  %s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
+            printf("||  %s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
             
         } else {
             // Mois différents : format complet pour les deux
@@ -97,9 +97,9 @@ void afficher_depenses(time_t date_ref) {
             format_date_affichage(debut_str, debut_formate, sizeof(debut_formate));
             format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
              
-            printf("  %s -> %s\n",  debut_formate, fin_formate);
+            printf("||  %s -> %s\n",  debut_formate, fin_formate);
         }
-        printf("=================================\n\n");
+        printf("  =================================\n\n");
 
 
 
@@ -152,9 +152,9 @@ void afficher_depenses(time_t date_ref) {
         if (depenses_trouvees == 0) {
             printf("   Aucune depense cette semaine.\n");
         } else { 
-            printf("=================================\n");
-            printf("\n||  TOTAL GENERAL           ||\n");
-            printf("=================================\n");
+            printf("\n  =================================\n");
+            printf("||  TOTAL GENERAL                ||\n");
+            printf("  =================================\n");
             printf("Nombre   : %4d depenses \n", depenses_trouvees);
             printf("Total    :  \033[1;36m%8.2f\033[0m dhs  \n", total);
             printf("=================================\n");
