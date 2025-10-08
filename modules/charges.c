@@ -194,9 +194,9 @@ void afficher_les_charges() {
     char mois_annee_formate[50];
     format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
     
-    printf("  ==========================================\n");
+    printf("==========================================\n");
     printf("  SYNTHESE DU MOIS : %s\n", mois_annee_formate);
-    printf("  ==========================================\n");
+    printf("==========================================\n");
 
     char line[256];
     fgets(line, sizeof(line), f); // Lire l'en-tête
@@ -245,9 +245,9 @@ void afficher_les_charges() {
                 // Total général (charges + dépenses)
                 double total_general = total_charges + total_depenses_mois;
                 printf("\n  TOTAL GENERAL\n");
-                printf("  ==========================================\n");
+                printf("==========================================\n");
                 printf("Fixes + Variables : %8.2f dhs\n", total_general);
-                printf("  ==========================================\n");
+                printf("==========================================\n");
             } else {
                 printf("\n  Aucune depense ce mois.\n");
             }
