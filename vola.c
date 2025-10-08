@@ -10,7 +10,7 @@ int main() {
         printf("\n  ================= GESTION DEPENSES ================\n");
         printf("|| 1.Ajouter ");
         printf("|| 2.Historique ");
-        printf("|| 3.Fixes "); 
+        printf("|| 3.Totaux "); 
         printf("|| 0.Quitter ||");
         printf("\n  ===================================================\n");
         printf("|| Choix: "); 
@@ -20,7 +20,7 @@ int main() {
         switch (choix) {
             case 1: add_depense(); break;
             case 2: afficher_depenses(maintenant); break;  
-            case 3: afficher_charges_fixes(); break;
+            case 3: afficher_les_charges(); break;
 
             case 0:
                 printf("\033[1;32m"); // vert vif

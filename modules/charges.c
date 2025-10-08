@@ -34,36 +34,6 @@ void ensure_charges_fixes_current_month() {
     fclose(f);
 }
 
-void afficher_charges_fixes() {
-    ensure_charges_fixes_current_month();
-    int mois, annee;
-    get_current_month_year(&mois, &annee);
-
-    FILE *f = fopen(CHARGES_FIXES_FILE, "r");
-    if (!f) { printf("Erreur lecture charges fixes.\n"); return; }
-
-    char line[256];
-    fgets(line, sizeof(line), f);
-    while (fgets(line, sizeof(line), f)) {
-        int m, a;
-        double loyer, wifi, tram, redal, iruno;
-        sscanf(line, "%d,%d,%lf,%lf,%lf,%lf,%lf",
-               &m, &a, &loyer, &wifi, &tram, &redal, &iruno);
-        if (m == mois && a == annee) {
-            char date_str[50];
-            snprintf(line, sizeof(line), "%d-%02d-01", a, m);
-            format_date_affichage(line, date_str, sizeof(date_str));
-            printf("\n=== CHARGES FIXES (%s) ===\n", date_str);
-            printf("Loyer : %.2f\nWifi : %.2f\nTram : %.2f\nRedal : %.2f\nIruno : %.2f\n",
-                   loyer, wifi, tram, redal, iruno);
-            printf("Total charges fixes : %.2f\n\n",
-                   loyer + wifi + tram + redal + iruno);
-            break;
-        }
-    }
-    fclose(f);
-}
-
 void set_charges_fixes() {
     int mois, annee;
     get_current_month_year(&mois, &annee);
@@ -141,5 +111,68 @@ void set_charges_fixes() {
     rename("tmp.csv", CHARGES_FIXES_FILE);
 
     printf("✅ Charges fixes mises a jour avec succes.\n");
-    afficher_charges_fixes();
+    afficher_les_charges();
+}
+
+void afficher_les_charges() {
+    printf("\033[2J\033[H"); 
+    ensure_charges_fixes_current_month();
+    int mois, annee;
+    get_current_month_year(&mois, &annee);
+
+    FILE *f = fopen(CHARGES_FIXES_FILE, "r");
+    if (!f) { printf("Erreur lecture charges fixes.\n"); return; }
+
+    printf("\n=== DEPENSES DU MOIS ===\n");
+
+    char line[256];
+    fgets(line, sizeof(line), f); // Lire l'en-tête
+    while (fgets(line, sizeof(line), f)) {
+        int m, a;
+        double loyer, wifi, tram, redal, iruno;
+        sscanf(line, "%d,%d,%lf,%lf,%lf,%lf,%lf",
+               &m, &a, &loyer, &wifi, &tram, &redal, &iruno);
+        if (m == mois && a == annee) {
+            char date_str[50];
+            snprintf(line, sizeof(line), "%d-%02d-01", a, m);
+            format_date_affichage(line, date_str, sizeof(date_str));
+            printf("\n--- Charges Fixes ---\n");
+            printf("Loyer : %.2f  dhs\nWifi : %.2f  dhs\nTram : %.2f  dhs\nRedal : %.2f  dhs\nIruno : %.2f  dhs\n",
+                   loyer, wifi, tram, redal, iruno);
+            double total_charges = loyer + wifi + tram + redal + iruno;
+            printf("--- Total charges fixes : %.2f  dhs\n", total_charges);
+            
+            // Calculer les dépenses du mois
+            double total_depenses_mois = 0.0;
+            int nb_depenses = 0;
+            FILE *f_depenses = fopen(DEPENSES_FILE, "r");
+            if (f_depenses) {
+                while (fgets(line, sizeof(line), f_depenses)) {
+                    char date[20], heure[20];
+                    double montant;
+                    if (sscanf(line, "%10[^,],%8[^,],%lf", date, heure, &montant) == 3) {
+                        int annee_dep, mois_dep, jour_dep;
+                        sscanf(date, "%d-%d-%d", &annee_dep, &mois_dep, &jour_dep);
+                        if (annee_dep == annee && mois_dep == mois) {
+                            total_depenses_mois += montant;
+                            nb_depenses++;
+                        }
+                    }
+                }
+                fclose(f_depenses);
+                
+                printf("\n--- Charges Aleatoire ---\n");
+                printf("Total charges aleatoire : %.2f  dhs (%d depenses)\n", total_depenses_mois, nb_depenses);
+                
+                // Total général (charges + dépenses)
+                double total_general = total_charges + total_depenses_mois;
+                printf("\n--- Total General ---\n");
+                printf("Charges fixes + Variables : %.2f  dhs\n", total_general);
+            } else {
+                printf("\nAucune depense ce mois.\n");
+            }
+            break;
+        }
+    }
+    fclose(f);
 }
