@@ -1,8 +1,7 @@
 #ifndef DEPENSES_H
 #define DEPENSES_H
 
-#define DEPENSES_FILE "data/depenses.csv"
-// #define DEPENSES_FILE "VOLA/data/depenses.csv"
+#define DEPENSES_FILE "VOLA/data/depenses.csv"
 
 #include <stdio.h>
 #include <stdlib.h>  
