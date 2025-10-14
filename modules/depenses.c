@@ -4,9 +4,10 @@
 
 void add_depense() {
     char input[50];
-    printf("Saisissez vos depenses (entrez 'q' pour quitter):\n");
+    printf("|| Saisissez vos depenses (entrez 'q' pour quitter):\n");
     while (1) {
-        printf("Montant: ");
+        printf("|| Montant: ");
+        fflush(stdout); 
         scanf("%s", input);
         if (tolower(input[0]) == 'q') {
             printf("✅ Fin de saisie.\n");
