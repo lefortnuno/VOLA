@@ -9,6 +9,6 @@
 !modules/
 !modules/*.c 
 !modules/*.h   
-!data/
-!data/data.csv
-!data/trofel.csv
+# !data/
+# !data/data.csv
+# !data/trofel.csv
