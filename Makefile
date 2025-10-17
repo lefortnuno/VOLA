@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -std=c99 -Imodules
-SRC = vola.c modules/utils.c modules/depenses.c modules/charges.c
+SRC = vola.c modules/utils.c modules/depenses.c modules/charges.c modules/revenus.c
 TARGET = vola
 
 $(TARGET): $(SRC)

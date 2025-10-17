@@ -42,7 +42,7 @@ void afficher_depenses(time_t date_ref) {
     time_t date_now = date_ref;
     int choix_semaine;
     do { 
-        printf("\033[2J\033[H"); 
+        printf("\033[3J\033[H\033[2J"); 
 
         struct tm tm_ref = *localtime(&date_ref);
         int wday = tm_ref.tm_wday; // dimanche=0

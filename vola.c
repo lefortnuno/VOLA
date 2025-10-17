@@ -21,12 +21,12 @@ int main() {
             case 1: add_depense(); break;
             case 2: afficher_depenses(maintenant); break;  
             case 3: 
-                printf("\n\033[2J\033[H");
+                printf("\n\033[3J\033[H\033[2J");
                 afficher_les_charges(); 
                 break;
 
             case 0:
-                printf("\033[2J\033[H");
+                printf("\033[3J\033[H\033[2J");
                 printf("\033[1;32m"); // vert vif
                 printf("\n  ===========================================\n");
                 printf("||   Merci d avoir utilise le programme !  ||\n"); 
