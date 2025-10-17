@@ -157,8 +157,8 @@ void afficher_depenses(time_t date_ref) {
         } else {  
             printf("----------------------------------------------\n");
             printf("%-20s|  SYNTHESE GENERALE\n", spc);
-            printf("  =================================\n");
-            printf("Nombre:%-15s|  %4d depenses \n", spc, depenses_trouvees);
+            printf("----------------------------------------------\n");
+            printf("Nombre:%-16s|  %4d depenses \n", spc, depenses_trouvees);
             printf("Total  :%-15s|  \033[1;36m%8.2f\033[0m dhs\n", spc, total);
             printf("----------------------------------------------\n");
         }
