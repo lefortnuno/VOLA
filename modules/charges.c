@@ -179,8 +179,7 @@ void afficher_les_charges() {
                 printf("----------------------------------------------\n");
                 printf("\n%2sDIVERS REVENUS%-6s|%2sDIVERS DEPENSES\n", spc, spc, spc);
                 printf("----------------------------------------------\n");
-                printf("%-22s| Nombre : %4d \n", spc, nb_depenses);
-                printf("----------------------------------------------\n");
+                printf("%-22s| Nombre : %4d \n", spc, nb_depenses); 
                 printf("%-22s| Total  : \033[1;36m%8.2f\033[0m dhs\n", spc, total_depenses_mois);
                 printf("----------------------------------------------\n");
                 
@@ -192,9 +191,9 @@ void afficher_les_charges() {
                 double total_general = total_charges + total_depenses_mois;
                 double total_rgeneral = total_revenus + total_lucky_mois;
 
-                printf("\n%2sTOTAL SOLDE%-9s|%2sTOTAL DEPENSES\n", spc, spc, spc);
-                printf("----------------------------------------------\n");
-                printf("Total  : \033[1;33m%8.2f\033[0m dhs | ", total_rgeneral);
+                //printf("\n%2sTOTAL SOLDE%-9s|%2sTOTAL DEPENSES\n", spc, spc, spc);
+                //printf("----------------------------------------------\n");
+                printf("T.GNRL : \033[1;33m%8.2f\033[0m dhs | ", total_rgeneral);
                 printf("T.GNRL : \033[1;33m%8.2f\033[0m dhs\n", total_general);
                 printf("----------------------------------------------\n");
 
