@@ -9,6 +9,6 @@
 !modules/
 !modules/*.c 
 !modules/*.h  
-!sh
-!data/
-!data/data.csv
+# !sh
+# !data/
+# !data/data.csv
