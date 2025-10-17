@@ -8,7 +8,7 @@ char *noms_charges[] = {"mois", "annee", "loyer", "wifi", "tram", "redal", "irun
 int nb_charges = sizeof(charges) / sizeof(charges[0]);
 int nb_noms_charges = sizeof(noms_charges) / sizeof(noms_charges[0]);
 
-float revenus[] = {0, 750, 0, 0, 0};
+float revenus[] = {0, 750, 0, 0, 5922};
 char *noms_revenus[] = {"mois", "annee", "AC2I", "Bourse", "Trofel", "dev", "autre"};
 int nb_revenus = sizeof(revenus) / sizeof(revenus[0]);
 int nb_noms_revenus = sizeof(noms_revenus) / sizeof(noms_revenus[0]);
