@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
+extern char *spc;
 extern float charges[];
 extern char *noms_charges[];
 extern int nb_charges;

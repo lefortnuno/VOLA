@@ -2,6 +2,7 @@
 #include "revenus.h"
 #include "utils.h"
 
+char *spc = " ";
 float charges[] = {1150, 100, 160, 50, 0, 0};
 char *noms_charges[] = {"mois", "annee", "loyer", "wifi", "tram", "redal", "iruno", "dette"};
 int nb_charges = sizeof(charges) / sizeof(charges[0]);
@@ -62,7 +63,6 @@ void ensure_charges_fixes_current_month() {
 
 // Affichage des Revenus et des Charges 
 void afficher_les_charges() {
-    char *spc = " ";
     int mois, annee;
     printf("\033[3J\033[H\033[2J"); 
     ensure_charges_fixes_current_month();

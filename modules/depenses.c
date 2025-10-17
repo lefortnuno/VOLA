@@ -1,5 +1,6 @@
 #include "depenses.h"
 #include "utils.h"
+#include "charges.h"
 #include <ctype.h>
 
 void add_depense() {
@@ -69,9 +70,8 @@ void afficher_depenses(time_t date_ref) {
         strftime(debut_str, sizeof(debut_str), "%Y-%m", &tm_debut);
         strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
 
-        printf("  =================================\n");
-        printf("||              DEPENSE            ||\n");
-        printf("||           DE LA SEMAINE         ||\n");
+        printf("===============================================\n");
+        printf("  DEPENSE DE LA SEMAINE ");
 
         if (strcmp(debut_str, fin_str) == 0) { 
             char jour_debut[3], jour_fin[3];
@@ -88,7 +88,7 @@ void afficher_depenses(time_t date_ref) {
                 mois_annee_only = mois_annee_formate;
             }
               
-            printf("||       %s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
+            printf("%s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
             
         } else {
             // Mois différents : format complet pour les deux
@@ -98,16 +98,18 @@ void afficher_depenses(time_t date_ref) {
             format_date_affichage(debut_str, debut_formate, sizeof(debut_formate));
             format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
              
-            printf("||       %s -> %s\n",  debut_formate, fin_formate);
+            printf("%s -> %s\n",  debut_formate, fin_formate);
         }
-        printf("  =================================\n\n");
+        printf("==============================================\n\n");
+        printf("    DATE     │ HEURE │   MONTANT  \n");
+        printf("----------------------------------------------\n");
 
 
 
         // Lecture fichier
         FILE *f = fopen(DEPENSES_FILE, "r");
         if (!f) { 
-            printf("Aucune depense enregistree.\n"); 
+            printf("  Aucune depense enregistree.\n"); 
             return; 
         }
 
@@ -142,7 +144,7 @@ void afficher_depenses(time_t date_ref) {
                     snprintf(heure_fmt, sizeof(heure_fmt), "%02d:%02d", 
                              tm_dep.tm_hour, tm_dep.tm_min);
                     
-                    printf("%s %s -> %.2f dhs\n", date_fmt, heure_fmt, montant);
+                    printf("  %-10s │ %-5s │ %8.2f dhs \n", date_fmt, heure_fmt, montant);
                     total += montant;
                     depenses_trouvees++;
                 }
@@ -152,13 +154,13 @@ void afficher_depenses(time_t date_ref) {
 
         if (depenses_trouvees == 0) {
             printf("   Aucune depense cette semaine.\n");
-        } else { 
-            printf("\n  =================================\n");
-            printf("||        SYNTHESE GENERALE        ||\n");
+        } else {  
+            printf("----------------------------------------------\n");
+            printf("%-20s|  SYNTHESE GENERALE\n", spc);
             printf("  =================================\n");
-            printf("|| Nombre   :  %4d depenses       ||\n", depenses_trouvees);
-            printf("|| Total    :  \033[1;36m%8.2f\033[0m dhs        ||\n", total);
-            printf("  =================================\n");
+            printf("Nombre:%-15s|  %4d depenses \n", spc, depenses_trouvees);
+            printf("Total  :%-15s|  \033[1;36m%8.2f\033[0m dhs\n", spc, total);
+            printf("----------------------------------------------\n");
         }
  
         // Menu navigation semaine avec validation
