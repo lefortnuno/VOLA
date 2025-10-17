@@ -143,7 +143,7 @@ void afficher_depenses(time_t date_ref) {
         if (depenses_trouvees == 0) {
             printf("   Aucune depense cette semaine.\n");
         } else {  
-            printf("----------------------------------------------\n");
+            printf("\n");
             printf("%-21s|  SYNTHESE GENERALE\n", spc);
             printf("----------------------------------------------\n");
             printf("Nombre :%-13s|  %4d depenses \n", spc, depenses_trouvees);
