@@ -64,15 +64,31 @@ void afficher_depenses(time_t date_ref) {
 
         // Affichage de la semaine en titre  
         char debut_str[20], fin_str[20], mois_annee_str[20];
-        char debut_formate[50], fin_formate[50], mois_annee_formate[50];
+        char mois_annee_formate[50];
 
         // Vérifier si début et fin sont dans le même mois
         strftime(debut_str, sizeof(debut_str), "%Y-%m", &tm_debut);
         strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
 
         printf("===============================================\n");
-        printf("  DEPENSE DE LA SEMAINE ");
-
+        printf("  DEPENSE DE LA SEMAINE "); 
+        
+            char jour_debut[3], jour_fin[3];
+            strftime(jour_debut, sizeof(jour_debut), "%d", &tm_debut);
+            strftime(jour_fin, sizeof(jour_fin), "%d", &tm_fin);
+             
+            strftime(mois_annee_str, sizeof(mois_annee_str), "%Y-%m-%d", &tm_fin);
+            format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
+             
+            char *mois_annee_only = strchr(mois_annee_formate, ' ');
+            if (mois_annee_only != NULL) {
+                mois_annee_only++; // sauter le premier espace
+            } else {
+                mois_annee_only = mois_annee_formate;
+            }
+              
+            printf("%s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
+            /*
         if (strcmp(debut_str, fin_str) == 0) { 
             char jour_debut[3], jour_fin[3];
             strftime(jour_debut, sizeof(jour_debut), "%d", &tm_debut);
@@ -92,18 +108,17 @@ void afficher_depenses(time_t date_ref) {
             
         } else {
             // Mois différents : format complet pour les deux
-            strftime(debut_str, sizeof(debut_str), "%Y-%m-%d", &tm_debut);
+            strftime(debut_str, sizeof(debut_str), "%d", &tm_debut);
             strftime(fin_str, sizeof(fin_str), "%Y-%m-%d", &tm_fin);
-            
-            format_date_affichage(debut_str, debut_formate, sizeof(debut_formate));
+             
             format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
              
-            printf("%s -> %s\n",  debut_formate, fin_formate);
+            printf("%s -> %s\n",  debut_str, fin_formate);
         }
+*/
         printf("==============================================\n\n");
-        printf("    DATE     │ HEURE │   MONTANT  \n");
+        printf("    DATE     | HEURE |   MONTANT  \n");
         printf("----------------------------------------------\n");
-
 
 
         // Lecture fichier
@@ -144,7 +159,7 @@ void afficher_depenses(time_t date_ref) {
                     snprintf(heure_fmt, sizeof(heure_fmt), "%02d:%02d", 
                              tm_dep.tm_hour, tm_dep.tm_min);
                     
-                    printf("  %-10s │ %-5s │ %8.2f dhs \n", date_fmt, heure_fmt, montant);
+                    printf("  %-10s | %-5s | %8.2f dhs \n", date_fmt, heure_fmt, montant);
                     total += montant;
                     depenses_trouvees++;
                 }
@@ -156,7 +171,7 @@ void afficher_depenses(time_t date_ref) {
             printf("   Aucune depense cette semaine.\n");
         } else {  
             printf("----------------------------------------------\n");
-            printf("%-20s|  SYNTHESE GENERALE\n", spc);
+            printf("%-22s|  SYNTHESE GENERALE\n", spc);
             printf("----------------------------------------------\n");
             printf("Nombre:%-16s|  %4d depenses \n", spc, depenses_trouvees);
             printf("Total  :%-15s|  \033[1;36m%8.2f\033[0m dhs\n", spc, total);
