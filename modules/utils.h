@@ -1,7 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#define DATA_FILE "VOLA/data/data.csv"
+#define DATA_FILE "data/data.csv"
 
 #include <stdio.h>
 #include <stdlib.h>

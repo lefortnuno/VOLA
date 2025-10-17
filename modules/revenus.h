@@ -1,8 +1,8 @@
 #ifndef REVENUS_H
 #define REVENUS_H
 
-#define REVENUS_FILE "VOLA/data/revenu.csv" 
-#define REVENUS_FIXES_FILE "VOLA/data/revenu_fixes.csv"
+#define REVENUS_FILE "data/revenu.csv" 
+#define REVENUS_FIXES_FILE "data/revenu_fixes.csv"
 
 #include <stdio.h>
 #include <stdlib.h> 

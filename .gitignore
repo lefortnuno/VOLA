@@ -8,7 +8,7 @@
 !README.md
 !modules/
 !modules/*.c 
-!modules/*.h  
-# !sh
-# !data/
-# !data/data.csv
+!modules/*.h   
+!data/
+!data/data.csv
+!data/trofel.csv
