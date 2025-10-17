@@ -70,7 +70,7 @@ void afficher_depenses(time_t date_ref) {
         strftime(debut_str, sizeof(debut_str), "%Y-%m", &tm_debut);
         strftime(fin_str, sizeof(fin_str), "%Y-%m", &tm_fin);
 
-        printf("===============================================\n");
+        printf("==============================================\n");
         printf("  DEPENSE DE LA SEMAINE "); 
         
         char jour_debut[3], jour_fin[3];
@@ -132,7 +132,7 @@ void afficher_depenses(time_t date_ref) {
                     snprintf(heure_fmt, sizeof(heure_fmt), "%02d:%02d", 
                              tm_dep.tm_hour, tm_dep.tm_min);
                     
-                    printf("  %-10s | %-5s | %8.2f dhs \n", date_fmt, heure_fmt, montant);
+                    printf("  %-10s | %-5s | %.2f dhs \n", date_fmt, heure_fmt, montant);
                     total += montant;
                     depenses_trouvees++;
                 }
