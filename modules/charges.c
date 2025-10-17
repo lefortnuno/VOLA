@@ -94,6 +94,7 @@ void lire_data_csv() {
     }
     fclose(f);
     // printf("✅ Données CSV lues : %d charges, %d revenus.\n", nb_charges, nb_revenus);
+    printf("\n");
 }
  
 void init_data() {
