@@ -115,7 +115,7 @@ void ensure_charges_fixes_current_month() {
         if (!f) { perror("Erreur creation fichier charges fixes"); return; }
         
         // Écrire l'en-tête avec une boucle
-        fprintf(f, "%s", noms_charges[0]);
+        fprintf(f, "mois,annee,%s", noms_charges[0]);
         for (int i = 1; i < nb_noms_charges; i++) {
             fprintf(f, ",%s", noms_charges[i]);
         }
