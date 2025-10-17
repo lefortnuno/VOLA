@@ -73,51 +73,24 @@ void afficher_depenses(time_t date_ref) {
         printf("===============================================\n");
         printf("  DEPENSE DE LA SEMAINE "); 
         
-            char jour_debut[3], jour_fin[3];
-            strftime(jour_debut, sizeof(jour_debut), "%d", &tm_debut);
-            strftime(jour_fin, sizeof(jour_fin), "%d", &tm_fin);
-             
-            strftime(mois_annee_str, sizeof(mois_annee_str), "%Y-%m-%d", &tm_fin);
-            format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
-             
-            char *mois_annee_only = strchr(mois_annee_formate, ' ');
-            if (mois_annee_only != NULL) {
-                mois_annee_only++; // sauter le premier espace
-            } else {
-                mois_annee_only = mois_annee_formate;
-            }
-              
-            printf("%s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
-            /*
-        if (strcmp(debut_str, fin_str) == 0) { 
-            char jour_debut[3], jour_fin[3];
-            strftime(jour_debut, sizeof(jour_debut), "%d", &tm_debut);
-            strftime(jour_fin, sizeof(jour_fin), "%d", &tm_fin);
-             
-            strftime(mois_annee_str, sizeof(mois_annee_str), "%Y-%m-%d", &tm_fin);
-            format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
-             
-            char *mois_annee_only = strchr(mois_annee_formate, ' ');
-            if (mois_annee_only != NULL) {
-                mois_annee_only++; // sauter le premier espace
-            } else {
-                mois_annee_only = mois_annee_formate;
-            }
-              
-            printf("%s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
+        char jour_debut[3], jour_fin[3];
+        strftime(jour_debut, sizeof(jour_debut), "%d", &tm_debut);
+        strftime(jour_fin, sizeof(jour_fin), "%d", &tm_fin);
             
+        strftime(mois_annee_str, sizeof(mois_annee_str), "%Y-%m-%d", &tm_fin);
+        format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
+            
+        char *mois_annee_only = strchr(mois_annee_formate, ' ');
+        if (mois_annee_only != NULL) {
+            mois_annee_only++; // sauter le premier espace
         } else {
-            // Mois différents : format complet pour les deux
-            strftime(debut_str, sizeof(debut_str), "%d", &tm_debut);
-            strftime(fin_str, sizeof(fin_str), "%Y-%m-%d", &tm_fin);
-             
-            format_date_affichage(fin_str, fin_formate, sizeof(fin_formate));
-             
-            printf("%s -> %s\n",  debut_str, fin_formate);
+            mois_annee_only = mois_annee_formate;
         }
-*/
+            
+        printf("%s -> %s \033[1;36m%s\033[0m \n", jour_debut, jour_fin, mois_annee_only); 
+        
         printf("==============================================\n\n");
-        printf("    DATE     | HEURE |   MONTANT  \n");
+        printf("     DATE    | HEURE |     MONTANT  \n");
         printf("----------------------------------------------\n");
 
 
@@ -171,10 +144,10 @@ void afficher_depenses(time_t date_ref) {
             printf("   Aucune depense cette semaine.\n");
         } else {  
             printf("----------------------------------------------\n");
-            printf("%-22s|  SYNTHESE GENERALE\n", spc);
+            printf("%-21s|  SYNTHESE GENERALE\n", spc);
             printf("----------------------------------------------\n");
-            printf("Nombre:%-16s|  %4d depenses \n", spc, depenses_trouvees);
-            printf("Total  :%-15s|  \033[1;36m%8.2f\033[0m dhs\n", spc, total);
+            printf("Nombre:%-14s|  %4d depenses \n", spc, depenses_trouvees);
+            printf("Total  :%-13s|  \033[1;36m%8.2f\033[0m dhs\n", spc, total);
             printf("----------------------------------------------\n");
         }
  
