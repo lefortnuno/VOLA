@@ -2,20 +2,112 @@
 #include "revenus.h"
 #include "utils.h"
 
-char *spc = " ";
-float charges[] = {1150, 100, 160, 50, 0, 0};
-char *noms_charges[] = {"mois", "annee", "loyer", "wifi", "tram", "redal", "iruno", "dette"};
-int nb_charges = sizeof(charges) / sizeof(charges[0]);
-int nb_noms_charges = sizeof(noms_charges) / sizeof(noms_charges[0]);
+#define MAX_ITEMS 50
+#define MAX_NAME_LEN 64
 
-float revenus[] = {5000, 0, 0, 0, 0};
-char *noms_revenus[] = {"mois", "annee", "AC2I", "Bourse", "Trofel", "dev", "autre"};
-int nb_revenus = sizeof(revenus) / sizeof(revenus[0]);
-int nb_noms_revenus = sizeof(noms_revenus) / sizeof(noms_revenus[0]);
+char *spc = " ";
+float charges[MAX_ITEMS];
+char *noms_charges[MAX_ITEMS];
+int nb_charges = 0;
+int nb_noms_charges = 0;
+
+float revenus[MAX_ITEMS];
+char *noms_revenus[MAX_ITEMS];
+int nb_revenus = 0;
+int nb_noms_revenus = 0;
+
+static char *my_strdup(const char *s) {
+    if (!s) return NULL;
+    size_t len = strlen(s) + 1;
+    char *copy = malloc(len);
+    if (copy) memcpy(copy, s, len);
+    return copy;
+}
+
+void reset_data() {
+    nb_charges = nb_noms_charges = 0;
+    nb_revenus = nb_noms_revenus = 0;
+    for (int i = 0; i < MAX_ITEMS; i++) {
+        charges[i] = revenus[i] = 0.0f;
+        if (noms_charges[i]) { free(noms_charges[i]); noms_charges[i] = NULL; }
+        if (noms_revenus[i]) { free(noms_revenus[i]); noms_revenus[i] = NULL; }
+    }
+}
+
+
+void lire_data_csv() {
+    reset_data();
+
+    FILE *f = fopen(DATA_FILE, "r");
+    if (!f) {
+        perror("Erreur ouverture fichier data.csv");
+        return;
+    }
+
+    char line[256];
+    int mode = 0; // 1 = charges, 2 = revenus
+
+    while (fgets(line, sizeof(line), f)) {
+        line[strcspn(line, "\n")] = 0; // supprimer le \n
+
+        if (strstr(line, "Charges Fixes")) {
+            mode = 1;
+            continue;
+        } else if (strstr(line, "Revenus Fixes")) {
+            mode = 2;
+            continue;
+        }
+
+        if (mode == 1 && nb_noms_charges == 0 && strchr(line, ',')) {
+            // noms des charges
+            char *token = strtok(line, ",");
+            while (token && nb_noms_charges < MAX_ITEMS) {
+                noms_charges[nb_noms_charges] = my_strdup(token);
+                nb_noms_charges++;
+                token = strtok(NULL, ",");
+            }
+        } else if (mode == 1 && nb_charges == 0 && strchr(line, ',')) {
+            // valeurs des charges
+            char *token = strtok(line, ",");
+            while (token && nb_charges < MAX_ITEMS) {
+                charges[nb_charges] = atof(token);
+                nb_charges++;
+                token = strtok(NULL, ",");
+            }
+        } else if (mode == 2 && nb_noms_revenus == 0 && strchr(line, ',')) {
+            // noms des revenus
+            char *token = strtok(line, ",");
+            while (token && nb_noms_revenus < MAX_ITEMS) {
+                noms_revenus[nb_noms_revenus] = my_strdup(token);
+                nb_noms_revenus++;
+                token = strtok(NULL, ",");
+            }
+        } else if (mode == 2 && nb_revenus == 0 && strchr(line, ',')) {
+            // valeurs des revenus
+            char *token = strtok(line, ",");
+            while (token && nb_revenus < MAX_ITEMS) {
+                revenus[nb_revenus] = atof(token);
+                nb_revenus++;
+                token = strtok(NULL, ",");
+            }
+        }
+    }
+    fclose(f);
+    printf("✅ Données CSV lues : %d charges, %d revenus.\n", nb_charges, nb_revenus);
+}
+ 
+void init_data() {
+    lire_data_csv();
+
+    if (nb_charges == 0 || nb_revenus == 0) {
+        printf("⚠️ Données manquantes dans %s\n", DATA_FILE);
+    }
+}
 
 void ensure_charges_fixes_current_month() {
     int mois, annee;
     get_current_month_year(&mois, &annee);
+    init_data();
 
     FILE *f = fopen(CHARGES_FIXES_FILE, "r+");
     if (!f) {
@@ -131,20 +223,17 @@ void afficher_les_charges() {
             
             printf("\n%2sREVENUS%13s|%2sCHARGES FIXES\n", spc , spc, spc);
             printf("----------------------------------------------\n"); 
-            int bcl = nb_charges - nb_revenus > 0 ? nb_charges : nb_revenus;
-            for (int i = 0; i < bcl; i++) {
-                if (i < nb_revenus) {
-                    printf("%-7s: %8.2f dhs | ", noms_revenus[i+2], revenus_lues[i]);
-                }
-                else {
+            int max_items = (nb_revenus > nb_charges) ? nb_revenus : nb_charges;
+            for (int i = 0; i < max_items; i++) { 
+                if (i < nb_revenus)
+                    printf("%-7s: %8.2f dhs | ", noms_revenus[i], revenus_lues[i]);
+                else
                     printf("%-22s| ", spc);
-                }
-                if (i < nb_charges) {
-                    printf("%-7s: %8.2f dhs\n", noms_charges[i+2], charges_lues[i]);
-                }
-                else {
-                    printf("%-22s| ", spc);
-                }
+
+                if (i < nb_charges)
+                    printf("%-7s: %8.2f dhs\n", noms_charges[i], charges_lues[i]);
+                else
+                    printf("%-22s| ", spc); 
             }
             printf("----------------------------------------------\n");
             double total_charges = 0.0;

@@ -17,5 +17,8 @@ extern int nb_noms_charges;
 void ensure_charges_fixes_current_month(); 
 void set_charges_fixes();
 void afficher_les_charges();
+void init_data();
+void lire_data_csv();
+void reset_data() ;
 
 #endif

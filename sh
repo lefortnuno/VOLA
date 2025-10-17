@@ -1,7 +1,7 @@
 #!/bin/sh 
 git fetch --all
 git reset --hard origin/main
-make 
+make  
 rm ../vola
 mv vola ../vola
 cd ..
