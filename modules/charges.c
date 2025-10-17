@@ -2,8 +2,8 @@
 #include "revenus.h"
 #include "utils.h"
 
-float charges[] = {1150, 100, 160, 50, 0};
-char *noms_charges[] = {"mois", "annee", "loyer", "wifi", "tram", "redal", "iruno"};
+float charges[] = {1150, 100, 160, 50, 0, 0};
+char *noms_charges[] = {"mois", "annee", "loyer", "wifi", "tram", "redal", "iruno", "dette"};
 int nb_charges = sizeof(charges) / sizeof(charges[0]);
 int nb_noms_charges = sizeof(noms_charges) / sizeof(noms_charges[0]);
 
