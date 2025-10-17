@@ -154,7 +154,7 @@ void afficher_depenses(time_t date_ref) {
             printf("   Aucune depense cette semaine.\n");
         } else { 
             printf("\n  =================================\n");
-            printf("||           SYNTHESE GENERALE     ||\n");
+            printf("||        SYNTHESE GENERALE        ||\n");
             printf("  =================================\n");
             printf("|| Nombre   :  %4d depenses       ||\n", depenses_trouvees);
             printf("|| Total    :  \033[1;36m%8.2f\033[0m dhs        ||\n", total);
@@ -164,12 +164,12 @@ void afficher_depenses(time_t date_ref) {
         // Menu navigation semaine avec validation
         int saisie_valide;
         do {
-            printf("\n  ==================================================\n");
+            printf("\n  ================================================\n");
             printf("|| 1.Precedent ");
-            printf("|| 2.Actuelle ");
+            printf("|| 2.Actuel ");
             printf("|| 3.Suivant "); 
             printf("|| 0.Menu ||");
-            printf("\n  ==================================================\n");
+            printf("\n  ================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
             

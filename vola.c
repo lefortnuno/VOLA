@@ -7,12 +7,12 @@ int main() {
     int choix = 0; 
     time_t maintenant = time(NULL);
     do {
-        printf("\n  ================= GESTION DEPENSES ================\n");
+        printf("\n  ================ GESTION DEPENSES ===============\n");
         printf("|| 1.Ajouter ");
-        printf("|| 2.Historique ");
+        printf("|| 2.Historiq ");
         printf("|| 3.Total "); 
         printf("|| 0.Quitter ||");
-        printf("\n  ===================================================\n");
+        printf("\n  =================================================\n");
         printf("|| Choix: "); 
         fflush(stdout); 
         scanf("%d", &choix);
