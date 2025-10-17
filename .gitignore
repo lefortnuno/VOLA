@@ -8,6 +8,5 @@
 !README.md
 !modules/
 !modules/*.c 
-!modules/*.h 
-!bat.sh
+!modules/*.h  
 !sh
