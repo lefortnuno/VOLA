@@ -193,15 +193,15 @@ void afficher_les_charges() {
 
                 //printf("\n%2sTOTAL SOLDE%-9s|%2sTOTAL DEPENSES\n", spc, spc, spc);
                 //printf("----------------------------------------------\n");
-                printf("T.GNRL : \033[1;33m%8.2f\033[0m dhs | ", total_rgeneral);
-                printf("T.GNRL : \033[1;33m%8.2f\033[0m dhs\n", total_general);
+                printf("T.SOLDE: \033[1;33m%8.2f\033[0m dhs | ", total_rgeneral);
+                printf("T.DPNS : \033[1;33m%8.2f\033[0m dhs\n", total_general);
                 printf("----------------------------------------------\n");
 
                 
                 double reste_general = total_rgeneral - total_rgeneral;
                 printf("\n%-22s|%2sSOLDE RESTANT\n", spc, spc); 
                 printf("----------------------------------------------\n");
-                printf("T.SOLDE - T.DEPENSE:|  \033[1;33m%8.2f\033[0m dhs\n", reste_general);
+                printf("T.SOLDE - T.DEPENSE:  |  \033[1;33m%8.2f\033[0m dhs\n", reste_general);
                 printf("----------------------------------------------\n");
                 //printf("==========================================\n");
             } else {
