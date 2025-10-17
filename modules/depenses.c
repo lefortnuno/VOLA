@@ -132,7 +132,7 @@ void afficher_depenses(time_t date_ref) {
                     snprintf(heure_fmt, sizeof(heure_fmt), "%02d:%02d", 
                              tm_dep.tm_hour, tm_dep.tm_min);
                     
-                    printf("  %-10s | %-5s | %.2f dhs \n", date_fmt, heure_fmt, montant);
+                    printf("  %-10s | %-5s | %10.2f dhs \n", date_fmt, heure_fmt, montant);
                     total += montant;
                     depenses_trouvees++;
                 }
@@ -146,7 +146,7 @@ void afficher_depenses(time_t date_ref) {
             printf("----------------------------------------------\n");
             printf("%-21s|  SYNTHESE GENERALE\n", spc);
             printf("----------------------------------------------\n");
-            printf("Nombre:%-14s|  %4d depenses \n", spc, depenses_trouvees);
+            printf("Nombre :%-14s|  %4d depenses \n", spc, depenses_trouvees);
             printf("Total  :%-13s|  \033[1;36m%8.2f\033[0m dhs\n", spc, total);
             printf("----------------------------------------------\n");
         }
