@@ -10,3 +10,4 @@
 !modules/*.c 
 !modules/*.h 
 !bat.sh
+!sh
