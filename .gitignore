@@ -9,4 +9,4 @@
 !modules/
 !modules/*.c 
 !modules/*.h  
-!sh
+# !sh
