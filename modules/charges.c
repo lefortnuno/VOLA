@@ -177,10 +177,11 @@ void afficher_les_charges() {
                 fclose(f_depenses);
                 
                 printf("------------------------------------------\n");
-                printf("\n%-20s|%2sDIVERS DEPENSES\n", spc, spc);
+                printf("\n%2sDIVERS REVENUS%-4s|%2sDIVERS DEPENSES\n", spc, spc, spc);
                 printf("------------------------------------------\n");
-                printf("%-20s| Nombr: %4d \n", spc, nb_depenses);
-                printf("%-20s| Total: \033[1;36m%8.2f\033[0m dhs\n", spc, total_depenses_mois);
+                printf("Nombr: 0%-12s| Nombr: %4d \n", spc, nb_depenses);
+                printf("------------------------------------------\n");
+                printf("Total: \033[1;36m0.0\033[0m dhs%-6s| Total: \033[1;36m%8.2f\033[0m dhs\n", spc, total_depenses_mois);
                 printf("------------------------------------------\n");
                 
                     
@@ -191,7 +192,7 @@ void afficher_les_charges() {
                 double total_general = total_charges + total_depenses_mois;
                 double total_rgeneral = total_revenus + total_lucky_mois;
 
-                printf("\n%-20s|%2sTOTAL GENERAL\n", spc, spc);
+                printf("\n%2sTOTAL SOLDE%-7s|%2sTOTAL DEPENSES\n", spc, spc, spc);
                 printf("------------------------------------------\n");
                 printf("R + D: \033[1;33m%8.2f\033[0m dhs | ", total_rgeneral);
                 printf("C + D: \033[1;33m%8.2f\033[0m dhs\n", total_general);
@@ -199,9 +200,10 @@ void afficher_les_charges() {
 
                 
                 double reste_general = total_rgeneral - total_rgeneral;
-                printf("\nSOLDE RESTANT\n", spc, spc);
-                printf("==========================================\n");
-                printf("Revenu - Depense : \033[1;33m%8.2f\033[0m dhs\n", reste_general);
+                printf("\n%-20s|%2sSOLDE RESTANT\n", spc, spc); 
+                printf("------------------------------------------\n");
+                printf("T.SOLDE - T.DEPENSE:| \033[1;33m%8.2f\033[0m dhs\n", reste_general);
+                printf("------------------------------------------\n");
                 printf("==========================================\n");
             } else {
                 printf("\n   Aucune depense ce mois.\n");
