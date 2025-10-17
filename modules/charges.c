@@ -129,7 +129,7 @@ void afficher_les_charges() {
         }
         if (m == mois && a == annee && rm == mois && ra == annee) {
             
-            printf("\n%2sREVENUS%13s|%3sCHARGES FIXES\n", spc , spc, spc);
+            printf("\n%2sREVENUS%13s|%2sCHARGES FIXES\n", spc , spc, spc);
             printf("----------------------------------------------\n"); 
             int bcl = nb_charges - nb_revenus > 0 ? nb_charges : nb_revenus;
             for (int i = 0; i < bcl; i++) {
@@ -180,7 +180,7 @@ void afficher_les_charges() {
                 printf("\n%2sDIVERS REVENUS%-6s|%2sDIVERS DEPENSES\n", spc, spc, spc);
                 printf("----------------------------------------------\n");
                 printf("%-22s| Nombre : %4d \n", spc, nb_depenses); 
-                printf("%-22s| Total  : \033[1;36m%8.2f\033[0m dhs\n", spc, total_depenses_mois);
+                printf("%-22s| Depense: \033[1;36m%8.2f\033[0m dhs\n", spc, total_depenses_mois);
                 printf("----------------------------------------------\n");
                 
                     
@@ -198,7 +198,7 @@ void afficher_les_charges() {
                 printf("----------------------------------------------\n");
 
                 
-                double reste_general = total_rgeneral - total_rgeneral;
+                double reste_general = total_rgeneral - total_general;
                 printf("\n%-22s|%2sSOLDE RESTANT\n", spc, spc); 
                 printf("----------------------------------------------\n");
                 printf("T.SOLDE - T.DEPENSE:  |  \033[1;33m%8.2f\033[0m dhs\n", reste_general);
