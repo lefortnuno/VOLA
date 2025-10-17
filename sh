@@ -1,4 +1,5 @@
 #!/bin/sh
+chmod +x sh
 git config --global user.name "lefortnuno"
 git config --global user.email "trofelnuno@gmail.com" 
 git fetch --all
