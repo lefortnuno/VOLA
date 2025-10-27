@@ -14,5 +14,6 @@ extern int nb_noms_revenus;
 
 void ensure_revenus_fixes_current_month(); 
 void set_revenus_fixes(); 
+double get_reste_general_precedent();
 
 #endif
