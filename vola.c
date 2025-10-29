@@ -14,7 +14,7 @@ int main() {
             printf("\n  ================ GESTION DEPENSES ===============\n");
             printf("|| 1.Ajouter ");
             printf("|| 2.Historiq ");
-            printf("|| 3.Tota1 "); 
+            printf("|| 3.Total "); 
             printf("|| 0.Quitter ||");
             printf("\n  =================================================\n");
             printf("||%-6s 4.UpRevenus %-6s", spc, spc);
