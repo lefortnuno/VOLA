@@ -158,7 +158,11 @@ void afficher_depenses(time_t date_ref) {
             printf("|| 1.Precedent ");
             printf("|| 2.Actuel ");
             printf("|| 3.Suivant "); 
-            printf("|| 0.Menu ||");
+            printf("|| 4.Menu ||");
+            printf("\n  ================================================\n");
+            printf("||%-2s 5.Ajouter %-2s", spc, spc);
+            printf("||%-2s 6.Total %-2s", spc, spc);
+            printf("||%-2s 00.Quitter %-2s||", spc, spc);
             printf("\n  ================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
@@ -169,7 +173,7 @@ void afficher_depenses(time_t date_ref) {
                 while ((c = getchar()) != '\n' && c != EOF);
                 saisie_valide = 0;
             } else {
-                saisie_valide = (choix_semaine >= 0 && choix_semaine <= 3);
+                saisie_valide = (choix_semaine >= 0 && choix_semaine <= 6);
             }
             
             if (!saisie_valide) {
@@ -177,8 +181,27 @@ void afficher_depenses(time_t date_ref) {
             }
         } while (!saisie_valide);
 
-        if (choix_semaine == 1) date_ref -= 7 * 24 * 60 * 60;  
-        else if (choix_semaine == 2) date_ref = date_now; 
-        else if (choix_semaine == 3) date_ref += 7 * 24 * 60 * 60;
-    } while (choix_semaine != 0);
+        switch (choix_semaine) {
+            case 1: date_ref -= 7 * 24 * 60 * 60; break;
+            case 2: date_ref = date_now;  break;  
+            case 3: date_ref += 7 * 24 * 60 * 60; break;
+            
+            case 4: break; // Pour Aller dans le menu 
+            case 5: choix_semaine = 4; add_depense(); break; 
+            case 6: 
+                printf("\n\033[3J\033[H\033[2J");
+                choix_semaine = 4;
+                afficher_les_charges(); 
+                break; 
+
+            case 0:
+                choix_semaine = 4;
+                choix_de_quitter();
+                break; 
+            default:
+                choix_invalide();
+                break;
+
+        } 
+    } while (choix_semaine != 4);
 }

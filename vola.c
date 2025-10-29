@@ -3,8 +3,9 @@
 #include "modules/charges.h" 
 #include "modules/utils.h" 
 
-int main() { 
-    int choix = 0; 
+int choix = 0;
+
+int main() {  
     time_t maintenant = time(NULL);
     do {
         printf("\n  ================ GESTION DEPENSES ===============\n");
@@ -12,6 +13,9 @@ int main() {
         printf("|| 2.Historiq ");
         printf("|| 3.Total "); 
         printf("|| 0.Quitter ||");
+        printf("\n  =================================================\n");
+        printf("||%-6s 4.UpRevenus %-6s", spc, spc);
+        printf("||%-4s 5.UpCharges %-5s||", spc, spc);
         printf("\n  =================================================\n");
         printf("|| Choix: "); 
         fflush(stdout); 
@@ -26,16 +30,8 @@ int main() {
                 break;
 
             case 0:
-                printf("\033[3J\033[H\033[2J");
-                printf("\033[1;32m"); // vert vif
-                printf("\n  ===========================================\n");
-                printf("||   Merci d avoir utilise le programme !    ||\n"); 
-                printf("||              A bientot :)                 ||\n");
-                printf("  ===========================================\n\n");
-                printf("\033[0m"); // réinitialise la couleur
-                break;
-
-
+                choix_de_quitter();
+                break;  
             default:
                 choix_invalide();
                 break;

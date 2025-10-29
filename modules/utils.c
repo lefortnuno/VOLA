@@ -55,3 +55,14 @@ void choix_invalide(){
     printf("  -----------------------------------------\n"); 
     printf("\033[0m"); // réinitialise la couleur  
 }
+
+void choix_de_quitter(){ 
+    choix = 0;
+    printf("\033[3J\033[H\033[2J");
+    printf("\033[1;32m"); // vert vif
+    printf("\n  ===========================================\n");
+    printf("||   Merci d avoir utilise le programme !    ||\n"); 
+    printf("||              A bientot :)                 ||\n");
+    printf("  ===========================================\n\n");
+    printf("\033[0m"); // réinitialise la couleur
+}

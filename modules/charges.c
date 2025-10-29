@@ -34,7 +34,6 @@ void reset_data() {
     }
 }
 
-
 void lire_data_csv() {
     reset_data();
 
