@@ -1,5 +1,7 @@
 #include "utils.h"
 
+char *spc = " ";
+
 void get_current_date(char *date_str, size_t size) {
     time_t now = time(NULL);
     struct tm *t = localtime(&now);

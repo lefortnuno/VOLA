@@ -1,8 +1,6 @@
 #ifndef DEPENSES_H
 #define DEPENSES_H
 
-#define DEPENSES_FILE "data/depenses.csv"
-
 #include <stdio.h>
 #include <stdlib.h>  
 #include <string.h>

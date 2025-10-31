@@ -1,15 +1,19 @@
-#include "charges.h"  
-#include "utils.h"
+#include "charges.h" 
+#include "data.h" 
 #include "revenus.h"
+#include "utils.h"
 #include <time.h>
  
+float revenus[MAX_ITEMS];
+char *noms_revenus[MAX_ITEMS];
+int nb_revenus = 0;
+int nb_noms_revenus = 0;
+
+
 void ensure_revenus_fixes_current_month() {
     int mois, annee;
     get_current_month_year(&mois, &annee); 
-
-    double epargne_precedente = get_reste_general_precedent();
-    // if (epargne_precedente < 0) epargne_precedente = 0; 
-
+    init_data();
 
     FILE *f = fopen(REVENUS_FIXES_FILE, "r+");
     if (!f) {
@@ -21,7 +25,6 @@ void ensure_revenus_fixes_current_month() {
         for (int i = 1; i < nb_noms_revenus; i++) {
             fprintf(f, ",%s", noms_revenus[i]);
         }
-        fprintf(f, ",epargne");
         fprintf(f, "\n");
         
         fclose(f);
@@ -47,70 +50,13 @@ void ensure_revenus_fixes_current_month() {
             for (int i = 0; i < nb_revenus; i++) {
                 fprintf(fa, ",%.0f", revenus[i]);
             }
-            fprintf(fa, ",%.0f\n", epargne_precedente);
             fprintf(fa, "\n");
             
-            fclose(fa);
-            printf("✅ Revenus fixes creees automatiquement pour %02d/%d.\n", mois, annee);
+            fclose(fa); 
         }
     }
     fclose(f);
 } 
-
-double get_reste_general_precedent() {
-    int mois, annee;
-    get_current_month_year(&mois, &annee);
-
-    // Mois précédent
-    if (--mois == 0) {
-        mois = 12;
-        annee--;
-    }
-
-    FILE *f = fopen(CHARGES_FIXES_FILE, "r");
-    FILE *r = fopen(REVENUS_FIXES_FILE, "r");
-    if (!f || !r) return 0.0;
-
-    char line[256], revenuLine[256];
-    fgets(line, sizeof(line), f); // skip header
-    fgets(revenuLine, sizeof(revenuLine), r);
-
-    double reste_general = 0.0;
-
-    while (fgets(line, sizeof(line), f) && fgets(revenuLine, sizeof(revenuLine), r)) {
-        int m, a, rm, ra;
-        double total_charges = 0.0, total_revenus = 0.0;
-
-        char *token = strtok(line, ",");
-        int idx = 0;
-        while (token) {
-            if (idx == 0) m = atoi(token);
-            else if (idx == 1) a = atoi(token);
-            else total_charges += atof(token);
-            token = strtok(NULL, ",");
-            idx++;
-        }
-
-        char *rtoken = strtok(revenuLine, ",");
-        idx = 0;
-        while (rtoken) {
-            if (idx == 0) rm = atoi(rtoken);
-            else if (idx == 1) ra = atoi(rtoken);
-            else total_revenus += atof(rtoken);
-            rtoken = strtok(NULL, ",");
-            idx++;
-        }
-
-        if (m == mois && a == annee && rm == mois && ra == annee) {
-            reste_general = total_revenus - total_charges;
-            break;
-        }
-    }
-
-    fclose(f);
-    fclose(r);
-    return reste_general;
-}
 
 void set_revenus_fixes() {
     int mois, annee;
@@ -202,6 +148,6 @@ void set_revenus_fixes() {
     rename("tmp.csv", REVENUS_FIXES_FILE);
 
     printf("✅ Charges fixes mises à jour avec succès.\n");
-    // afficher_les_charges();
+    // afficher_bilan();
 }
 

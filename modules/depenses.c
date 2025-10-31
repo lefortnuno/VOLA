@@ -1,6 +1,7 @@
+#include "bilan.h"
+#include "charges.h"
 #include "depenses.h"
 #include "utils.h"
-#include "charges.h"
 #include <ctype.h>
 
 void add_depense() {
@@ -191,7 +192,7 @@ void afficher_depenses(time_t date_ref) {
             case 6: 
                 printf("\n\033[3J\033[H\033[2J");
                 choix_semaine = 4;
-                afficher_les_charges(); 
+                afficher_bilan(); 
                 break; 
 
             case 0:

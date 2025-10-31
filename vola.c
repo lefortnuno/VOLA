@@ -1,4 +1,4 @@
- 
+#include "modules/bilan.h" 
 #include "modules/depenses.h" 
 #include "modules/charges.h" 
 #include "modules/utils.h" 
@@ -41,7 +41,7 @@ int main() {
             case 2: afficher_depenses(maintenant); break;  
             case 3: 
                 printf("\n\033[3J\033[H\033[2J");
-                afficher_les_charges(); 
+                afficher_bilan(); 
                 break;
 
             case 0:
