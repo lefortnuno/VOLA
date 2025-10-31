@@ -10,6 +10,7 @@ extern int nb_revenus;
 extern int nb_noms_revenus;
 extern int i_epargne;
 
+
 void ensure_revenus_fixes_current_month(); 
 void set_revenus_fixes(); 
 

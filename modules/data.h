@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
  
+
 void reset_data();
 void init_data();
 void lire_data_csv(); 

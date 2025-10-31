@@ -5,6 +5,7 @@
 #include "utils.h"
 #include <ctype.h>
 
+
 // Affichage des Revenus et des Charges 
 void afficher_bilan() {
     int mois, annee;

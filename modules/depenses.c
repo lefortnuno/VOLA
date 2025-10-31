@@ -4,6 +4,7 @@
 #include "utils.h"
 #include <ctype.h>
 
+
 void add_depense() {
     char input[50];
     printf("|| Saisissez vos depenses (entrez 'q' pour quitter):\n");

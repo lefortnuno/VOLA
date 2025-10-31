@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
  
+
 double get_reste_general_precedent();
 void afficher_bilan();
 
