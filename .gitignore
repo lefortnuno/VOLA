@@ -9,7 +9,7 @@
 !modules/
 !modules/*.c 
 !modules/*.h   
-# !data/
-# !data/data.csv
-# !data/data-i11.csv
-# !data/data-i13.csv
+!data/
+!data/data.csv
+!data/zelina-data.csv
+!data/trofel-data.csv
