@@ -9,6 +9,8 @@
 
 void reset_data();
 void init_data();
-void lire_data_csv(); 
+void read_schema(); 
+void update_schema(); 
+void sync_data_file(const char *filename); 
 
 #endif

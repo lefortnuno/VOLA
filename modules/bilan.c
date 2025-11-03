@@ -10,8 +10,10 @@
 void afficher_bilan() {
     int mois, annee;
     printf("\033[3J\033[H\033[2J"); 
+    sync_data_file(REVENUS_FIXES_FILE);
+    sync_data_file(CHARGES_FIXES_FILE); 
     ensure_charges_fixes_current_month();
-    ensure_revenus_fixes_current_month();
+    ensure_revenus_fixes_current_month(); 
     get_current_month_year(&mois, &annee);
 
     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
@@ -165,43 +167,82 @@ double get_reste_general_precedent() {
 
     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
     FILE *r = fopen(REVENUS_FIXES_FILE, "r");
-    if (!f || !r) return 0.0;
+    FILE *d = fopen(DEPENSES_FILE, "r");
+    double total_charges = 0.0, total_revenus = 0.0, total_depenses = 0.0;
 
-    char line[256], revenuLine[256];
-    fgets(line, sizeof(line), f); // skip header
-    fgets(revenuLine, sizeof(revenuLine), r);
+    if (!f) {
+        printf("❌ Impossible d'ouvrir %s\n", CHARGES_FIXES_FILE);
+        return 0.0;
+    }
+    if (!r) {
+        printf("❌ Impossible d'ouvrir %s\n", REVENUS_FIXES_FILE);
+        fclose(f);
+        return 0.0;
+    }
+    if (!d) {
+        printf("❌ Impossible d'ouvrir %s\n", DEPENSES_FILE);
+        fclose(f);
+        fclose(r);
+        return 0.0;
+    }
 
-    while (fgets(line, sizeof(line), f) && fgets(revenuLine, sizeof(revenuLine), r)) {
-        int m, a, rm, ra;
-        double total_charges = 0.0, total_revenus = 0.0;
-
+    char line[256];
+    
+    // Lecture des CHARGES
+    fgets(line, sizeof(line), f); // skip header "trofel"
+    while (fgets(line, sizeof(line), f)) {
+        int m, a, idx = 0; 
         char *token = strtok(line, ",");
-        int idx = 0;
         while (token) {
             if (idx == 0) m = atoi(token);
             else if (idx == 1) a = atoi(token);
-            else total_charges += atof(token);
+            else {
+                if (m == mois && a == annee) {
+                    total_charges += atof(token);
+                }
+            }
             token = strtok(NULL, ",");
             idx++;
         }
+    }
+    fclose(f);
 
-        char *rtoken = strtok(revenuLine, ",");
-        idx = 0;
-        while (rtoken) {
-            if (idx == 0) rm = atoi(rtoken);
-            else if (idx == 1) ra = atoi(rtoken);
-            else total_revenus += atof(rtoken);
-            rtoken = strtok(NULL, ",");
+    // Lecture des REVENUS
+    fgets(line, sizeof(line), r); // skip header "trofel"
+    while (fgets(line, sizeof(line), r)) {
+        int m, a, idx = 0; 
+        char *token = strtok(line, ",");
+        while (token) {
+            if (idx == 0) m = atoi(token);
+            else if (idx == 1) a = atoi(token);
+            else {
+                if (m == mois && a == annee) {
+                    total_revenus += atof(token);
+                }
+            }
+            token = strtok(NULL, ",");
             idx++;
         }
-
-        if (m == mois && a == annee && rm == mois && ra == annee) {
-            reste_general = total_revenus - total_charges;
-            break;
+    }
+    fclose(r);
+ 
+    // Lecture des DEPENSES
+    while (fgets(line, sizeof(line), d)) { 
+        int m, a;
+        char *token = strtok(line, ",");
+        
+        if (token) {
+            sscanf(token, "%d-%d", &a, &m);
+            token = strtok(NULL, ",");  
+            if (token) {
+                token = strtok(NULL, ",");  
+                if (token && m == mois && a == annee) total_depenses += atof(token); 
+            }  
         }
     }
+    fclose(d);
 
-    fclose(f);
-    fclose(r); 
+    reste_general = total_revenus - total_charges - total_depenses;
     return reste_general;
 }
+ 

@@ -157,13 +157,13 @@ void afficher_depenses(time_t date_ref) {
         int saisie_valide;
         do {
             printf("\n  ================================================\n");
-            printf("|| 1.Precedent ");
-            printf("|| 2.Actuel ");
-            printf("|| 3.Suivant "); 
-            printf("|| 4.Menu ||");
+            printf("|| 7.Precedent ");
+            printf("|| 8.Actuel ");
+            printf("|| 9.Suivant "); 
+            printf("|| 6.Menu ||");
             printf("\n  ================================================\n");
-            printf("||%-2s 5.Ajouter %-2s", spc, spc);
-            printf("||%-2s 6.Total %-2s", spc, spc);
+            printf("||%-2s 1.Ajouter %-2s", spc, spc);
+            printf("||%-2s 3.Total %-2s", spc, spc);
             printf("||%-2s 00.Quitter %-2s||", spc, spc);
             printf("\n  ================================================\n");
             printf("|| Choix: "); 
@@ -175,7 +175,7 @@ void afficher_depenses(time_t date_ref) {
                 while ((c = getchar()) != '\n' && c != EOF);
                 saisie_valide = 0;
             } else {
-                saisie_valide = (choix_semaine >= 0 && choix_semaine <= 6);
+                saisie_valide = (choix_semaine >= 0 && choix_semaine <= 9);
             }
             
             if (!saisie_valide) {
@@ -184,13 +184,13 @@ void afficher_depenses(time_t date_ref) {
         } while (!saisie_valide);
 
         switch (choix_semaine) {
-            case 1: date_ref -= 7 * 24 * 60 * 60; break;
-            case 2: date_ref = date_now;  break;  
-            case 3: date_ref += 7 * 24 * 60 * 60; break;
+            case 7: date_ref -= 7 * 24 * 60 * 60; break;
+            case 8: date_ref = date_now;  break;  
+            case 9: date_ref += 7 * 24 * 60 * 60; break;
             
-            case 4: break; // Pour Aller dans le menu 
-            case 5: choix_semaine = 4; add_depense(); break; 
-            case 6: 
+            case 6: break; // Pour Aller dans le menu 
+            case 1: choix_semaine = 4; add_depense(); break; 
+            case 3: 
                 printf("\n\033[3J\033[H\033[2J");
                 choix_semaine = 4;
                 afficher_bilan(); 

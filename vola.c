@@ -1,7 +1,8 @@
 #include "modules/bilan.h" 
+#include "modules/data.h" 
 #include "modules/depenses.h" 
 #include "modules/charges.h" 
-#include "modules/utils.h" 
+#include "modules/utils.h"  
 
 int choix = 0;
 
@@ -42,6 +43,11 @@ int main() {
             case 3: 
                 printf("\n\033[3J\033[H\033[2J");
                 afficher_bilan(); 
+                break;
+
+            case 4: 
+                printf("\n\033[3J\033[H\033[2J");
+                update_schema(); 
                 break;
 
             case 0:
