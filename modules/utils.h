@@ -20,6 +20,7 @@ extern int choix;
 extern char *spc;
 
 
+void ui_ux_design(char *design);
 void get_current_date(char *date_str, size_t size);
 void get_current_time(char *time_str, size_t size);
 void format_date_affichage(const char *date_in, char *date_out, size_t size);

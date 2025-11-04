@@ -2,6 +2,12 @@
 
 char *spc = " ";
 
+void ui_ux_design(char *design){
+    for(int i = 0; i < 50; i++){
+        printf("%s", design);
+    }
+    printf("\n");
+}
 
 void get_current_date(char *date_str, size_t size) {
     time_t now = time(NULL);

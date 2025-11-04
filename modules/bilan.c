@@ -32,9 +32,9 @@ void afficher_bilan() {
     char mois_annee_formate[50];
     format_date_affichage(mois_annee_str, mois_annee_formate, sizeof(mois_annee_formate));
     
-    printf("==============================================\n");
-    printf("%-4sSYNTHESE DU MOIS : %s\n", spc, mois_annee_formate);
-    printf("==============================================\n");
+    ui_ux_design("=");
+    printf("%-6sSYNTHESE DU MOIS : %s\n", spc, mois_annee_formate);
+    ui_ux_design("=");
 
     char line[256];
     char revenuLine[256];
@@ -75,21 +75,21 @@ void afficher_bilan() {
         }
         if (m == mois && a == annee && rm == mois && ra == annee) {
             
-            printf("\n%2sREVENUS%13s|%2sCHARGES FIXES\n", spc , spc, spc);
-            printf("----------------------------------------------\n"); 
+            printf("\n%3sREVENUS%14s|%3sCHARGES FIXES\n", spc , spc, spc);
+            ui_ux_design("-");
             int max_items = (nb_revenus > nb_charges) ? nb_revenus : nb_charges;
             for (int i = 0; i < max_items; i++) { 
                 if (i < nb_revenus)
-                    printf("%-7s: %8.2f dhs | ", noms_revenus[i], revenus_lues[i]);
+                    printf("%-9s: %8.2f dhs | ", noms_revenus[i], revenus_lues[i]);
                 else
-                    printf("%-22s| ", spc);
+                    printf("%-24s| ", spc);
 
                 if (i < nb_charges)
-                    printf("%-7s: %8.2f dhs\n", noms_charges[i], charges_lues[i]);
+                    printf("%-9s: %8.2f dhs\n", noms_charges[i], charges_lues[i]);
                 else
-                    printf("%-22s| ", spc); 
+                    printf("%-24s\n", spc); 
             }
-            printf("----------------------------------------------\n");
+            ui_ux_design("-");
             double total_charges = 0.0;
             for (int i = 0; i < nb_charges; i++) {
                 total_charges += charges_lues[i];
@@ -98,13 +98,51 @@ void afficher_bilan() {
             for (int i = 0; i < nb_revenus; i++) {
                 total_revenus += revenus_lues[i];
             }
-            printf("Total  : \033[1;36m%8.2f\033[0m dhs | Total  : \033[1;36m%8.2f\033[0m dhs\n", total_revenus, total_charges);
+            printf("Total%-4s: \033[1;36m%8.2f\033[0m dhs | Total%-4s: \033[1;36m%8.2f\033[0m dhs\n", spc, total_revenus, spc, total_charges);
             
             // Calculer les dépenses du mois
             double total_depenses_mois = 0.0;
             int nb_depenses = 0;
+            int nb_week = 0;
+            double total_depenses_week[5] = {0};
+            int nb_depenses_week[5] = {0};
+
             FILE *f_depenses = fopen(DEPENSES_FILE, "r");
             if (f_depenses) {
+                
+                while (fgets(line, sizeof(line), f_depenses)) {
+                    char date[20], heure[20];
+                    double montant;
+                    if (sscanf(line, "%10[^,],%8[^,],%lf", date, heure, &montant) == 3) {
+                        int annee_dep, mois_dep, jour_dep;
+                        sscanf(date, "%d-%d-%d", &annee_dep, &mois_dep, &jour_dep);
+                        if (annee_dep == annee && mois_dep == mois) { 
+                            if(jour_dep >= 1 && jour_dep <= 7 ){
+                                total_depenses_week[0] += montant;
+                                nb_depenses_week[0]++;
+                            }
+                            else if(jour_dep >= 8 && jour_dep <= 14 ){
+                                total_depenses_week[1] += montant;
+                                nb_depenses_week[1]++;
+                            }
+                            else if(jour_dep >= 15 && jour_dep <= 21 ){
+                                total_depenses_week[2] += montant;
+                                nb_depenses_week[2]++;
+                            }
+                            else if(jour_dep >= 22 && jour_dep <= 28 ){
+                                total_depenses_week[3] += montant;
+                                nb_depenses_week[3]++;
+                            }
+                            else if(jour_dep >= 29 && jour_dep <= 31 ){
+                                total_depenses_week[4] += montant;
+                                nb_depenses_week[4]++;
+                            } 
+                        }
+                    }
+                }
+                fclose(f_depenses);
+
+                f_depenses = fopen(DEPENSES_FILE, "r");
                 while (fgets(line, sizeof(line), f_depenses)) {
                     char date[20], heure[20];
                     double montant;
@@ -119,12 +157,20 @@ void afficher_bilan() {
                 }
                 fclose(f_depenses);
                 
-                printf("----------------------------------------------\n");
-                printf("\n%2sDIVERS REVENUS%-6s|%2sDIVERS DEPENSES\n", spc, spc, spc);
-                printf("----------------------------------------------\n");
-                printf("%-22s| Nombre : %4d \n", spc, nb_depenses); 
-                printf("%-22s| Depense: \033[1;36m%8.2f\033[0m dhs\n", spc, total_depenses_mois);
-                printf("----------------------------------------------\n");
+
+                for(int i = 0; i < 5; i++){ 
+                    if(nb_depenses_week[i] > 0) nb_week++; 
+                } 
+
+                ui_ux_design("-");
+                printf("\n%3sDIVERS REVENUS%-7s|%3sDIVERS DEPENSES\n", spc, spc, spc);
+                ui_ux_design("-");
+                for(int i = 0; i < nb_week; i++){ 
+                    printf("%-24s| Semaine %i: %8.2f dhs [%3d]\n", spc, i + 1, total_depenses_week[i], nb_depenses_week[i]);
+                }   
+                // ui_ux_design("-");
+                printf("%-24s| Total%-4s: \033[1;36m%8.2f\033[0m dhs [%3d]\n", spc, spc, total_depenses_mois, nb_depenses);  
+                ui_ux_design("-");
                 
                     
                 // Calculer les dépenses du mois
@@ -134,16 +180,16 @@ void afficher_bilan() {
                 double total_general = total_charges + total_depenses_mois;
                 double total_rgeneral = total_revenus + total_lucky_mois;
                 
-                printf("T.SOLDE: \033[1;33m%8.2f\033[0m dhs | ", total_rgeneral);
-                printf("T.DPNS : \033[1;33m%8.2f\033[0m dhs\n", total_general);
-                printf("----------------------------------------------\n");
+                printf("T.SOLDE%-2s: \033[1;33m%8.2f\033[0m dhs | ", spc, total_rgeneral);
+                printf("T.DPNS%-3s: \033[1;33m%8.2f\033[0m dhs\n", spc, total_general);
+                ui_ux_design("-");
 
                 
                 double reste_general = total_rgeneral - total_general;
-                printf("\n%-22s|%2sSOLDE RESTANT\n", spc, spc); 
-                printf("----------------------------------------------\n");
-                printf("T.SOLDE - T.DEPENSE:  |  \033[1;33m%8.2f\033[0m dhs\n", reste_general);
-                printf("----------------------------------------------\n");
+                printf("\n%-24s|%3sSOLDE RESTANT\n", spc, spc); 
+                ui_ux_design("-");
+                printf("T.SOLDE - T.DEPENSE :%-3s|  \033[1;33m%8.2f\033[0m dhs\n", spc, reste_general);
+                ui_ux_design("-");
             } else {
                 printf("\n   Aucune depense ce mois.\n");
             }
