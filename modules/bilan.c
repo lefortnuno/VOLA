@@ -9,11 +9,9 @@
 // Affichage des Revenus et des Charges 
 void afficher_bilan() {
     int mois, annee;
-    printf("\033[3J\033[H\033[2J"); 
-    sync_data_file(REVENUS_FIXES_FILE);
-    sync_data_file(CHARGES_FIXES_FILE); 
-    ensure_charges_fixes_current_month();
-    ensure_revenus_fixes_current_month(); 
+    printf("\033[3J\033[H\033[2J");    
+    sync_charge_file();
+    sync_revenu_file(); 
     get_current_month_year(&mois, &annee);
 
     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
@@ -151,6 +149,7 @@ void afficher_bilan() {
             break;
         }
     }
+    fclose(r);
     fclose(f);
 }
 

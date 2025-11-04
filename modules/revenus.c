@@ -9,13 +9,13 @@ char *noms_revenus[MAX_ITEMS];
 int nb_revenus = 0;
 int nb_noms_revenus = 0;
 
-
-void ensure_revenus_fixes_current_month() {
+void sync_revenu_file() {
     int mois, annee;
-    get_current_month_year(&mois, &annee); 
+    get_current_month_year(&mois, &annee);  
     init_data();
 
-    FILE *f = fopen(REVENUS_FIXES_FILE, "r+");
+    FILE *f = fopen(REVENUS_FIXES_FILE, "r");
+
     if (!f) {
         f = fopen(REVENUS_FIXES_FILE, "w");
         if (!f) { perror("Erreur creation fichier revenus fixes"); return; }
@@ -27,127 +27,43 @@ void ensure_revenus_fixes_current_month() {
         }
         fprintf(f, "\n");
         
-        fclose(f);
-        f = fopen(REVENUS_FIXES_FILE, "a");
-    }
-
-    char line[256];
-    int found = 0;
-    fgets(line, sizeof(line), f); // Lire l'en-tête
-    while (fgets(line, sizeof(line), f)) {
-        int m, a;
-        sscanf(line, "%d,%d", &m, &a);
-        if (m == mois && a == annee) { found = 1; break; }
-    }
-
-    if (!found) {
-        FILE *fa = fopen(REVENUS_FIXES_FILE, "a");
-        if (fa) {
-            // Écrire mois et année d'abord
-            fprintf(fa, "%d,%d", mois, annee);
-            
-            // Boucle pour écrire les revenus
-            for (int i = 0; i < nb_revenus; i++) {
-                fprintf(fa, ",%.0f", revenus[i]);
-            }
-            fprintf(fa, "\n");
-            
-            fclose(fa); 
-        }
-    }
-    fclose(f);
-} 
-
-void set_revenus_fixes() {
-    int mois, annee;
-    get_current_month_year(&mois, &annee);
-
-    // Charger les valeurs existantes du mois courant si disponibles
-    FILE *fin = fopen(REVENUS_FIXES_FILE, "r");
-    if (fin) {
-        char line[256];
-        fgets(line, sizeof(line), fin); // skip header
-        while (fgets(line, sizeof(line), fin)) {
-            int m, a;
-            sscanf(line, "%d,%d", &m, &a);
-            if (m == mois && a == annee) {
-                char *token = strtok(line, ",");
-                int index = 0;
-                while (token != NULL) {
-                    if (index >= 2 && (index - 2) < nb_revenus) {
-                        revenus[index - 2] = atof(token);
-                    }
-                    token = strtok(NULL, ",");
-                    index++;
-                }
-                break;
-            }
-        }
-        fclose(fin);
-    }
-
-    printf("Mois courant : %02d/%d\n", mois, annee);
-    char input[50];
-
-    // Boucle sur toutes les revenus connues (dynamiquement)
-    for (int i = 0; i < nb_revenus; i++) {
-        printf("%s (%.2f) : ", noms_revenus[i + 2], revenus[i]);
-        fgets(input, sizeof(input), stdin);
-        if (input[0] != '\n') {
-            revenus[i] = atof(input);
-        }
-    }
-
-    // Réécrire le fichier avec mise à jour ou ajout
-    fin = fopen(REVENUS_FIXES_FILE, "r");
-    FILE *tmp = fopen("tmp.csv", "w");
-    if (!tmp) {
-        perror("Erreur creation fichier temporaire");
+        fclose(f);  
         return;
     }
 
-    // Écrire l'en-tête
-    fprintf(tmp, "%s", noms_revenus[0]);
-    for (int i = 1; i < nb_noms_revenus; i++) {
-        fprintf(tmp, ",%s", noms_revenus[i]);
-    }
-    fprintf(tmp, "\n");
+    FILE *t = fopen(TMP_FILE, "w");
 
-    int updated = 0;
-    char line[256];
+    char line[256]; 
+    bool found = false;
+    fgets(line, sizeof(line), f); // Lire l'en-tête
+    fprintf(t, "%s", line);
 
-    if (fin) {
-        fgets(line, sizeof(line), fin); // skip header
-        while (fgets(line, sizeof(line), fin)) {
-            int m, a;
-            sscanf(line, "%d,%d", &m, &a);
-            if (m == mois && a == annee) {
-                fprintf(tmp, "%d,%d", mois, annee);
-                for (int i = 0; i < nb_revenus; i++) {
-                    fprintf(tmp, ",%.2f", revenus[i]);
-                }
-                fprintf(tmp, "\n");
-                updated = 1;
-            } else {
-                fputs(line, tmp);
+    while (fgets(line, sizeof(line), f)) {
+        int m, a;
+        sscanf(line, "%d,%d", &m, &a);
+        if (m == mois && a == annee) {
+            found = true;  
+            fprintf(t, "%d,%d", mois, annee);  
+            for (int i = 0; i < nb_revenus; i++) {
+                fprintf(t, ",%.0f", revenus[i]); 
             }
+            fprintf(t, "\n");  
+        } else {
+            fprintf(t, "%s", line); 
         }
-        fclose(fin);
-    }
-
-    if (!updated) {
-        fprintf(tmp, "%d,%d", mois, annee);
+    } 
+ 
+    if (!found) {
+        fprintf(t, "%d,%d", mois, annee);  
         for (int i = 0; i < nb_revenus; i++) {
-            fprintf(tmp, ",%.2f", revenus[i]);
+            fprintf(t, ",%.0f", revenus[i]); 
         }
-        fprintf(tmp, "\n");
+        fprintf(t, "\n");  
     }
 
-    fclose(tmp);
-    remove(REVENUS_FIXES_FILE);
-    rename("tmp.csv", REVENUS_FIXES_FILE);
-
-    printf("✅ Charges fixes mises à jour avec succès.\n");
-    // afficher_bilan();
+    fclose(t);
+    fclose(f);
+     
+    remove(REVENUS_FIXES_FILE);  
+    rename(TMP_FILE, REVENUS_FIXES_FILE);
 }
-

@@ -4,13 +4,6 @@
 #include "depenses.h"
 #include "revenus.h"
 #include "utils.h"
-#include <ctype.h>
-
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
 
 int i_epargne = 69;
 
@@ -97,7 +90,7 @@ void read_schema() {
             // valeurs des revenus
             char *token = strtok(line, ","); 
             while (token && nb_revenus < MAX_ITEMS) { 
-                if(i_epargne != 69 && i_epargne == nb_revenus) fprintf(t, nb_revenus == 0 ? "%.2f" : ",%.2f", epargne_precedente);
+                if(i_epargne != 69 && i_epargne == nb_revenus) fprintf(t, nb_revenus == 0 ? "%.0f" : ",%.0f", epargne_precedente);
                 else fprintf(t, nb_revenus == 0 ? "%s" : ",%s", token);
 
                 if(i_epargne != 69 && i_epargne == nb_revenus) revenus[nb_revenus] = epargne_precedente;
@@ -113,13 +106,13 @@ void read_schema() {
     fclose(t); 
     
     // REMPLACE DATA_FILE par TMP_FILE
-    remove(DATA_FILE);
-    rename(TMP_FILE, DATA_FILE);
+    remove(DATA_FILE); 
+    rename(TMP_FILE, DATA_FILE); 
 }
  
 void init_data() {
     read_schema();
-
+    
     if (nb_charges == 0 || nb_revenus == 0) {
         printf("⚠️ Données manquantes dans %s\n", DATA_FILE);
     }
@@ -129,54 +122,40 @@ void update_schema() {
     choix_invalide();
 }
  
-void sync_data_file(const char *filename) { 
-    int mois, annee;
-    get_current_month_year(&mois, &annee);
+// void sync_data_file(const char *filename) { 
+//     int mois, annee;
+//     get_current_month_year(&mois, &annee);
 
-    FILE *f = fopen(filename, "r"); 
-    FILE *t = fopen(TMP_FILE, "w"); 
-    if (!f) {
-        perror("Erreur ouverture fichier csv source");
-        return;
-    }  
+//     FILE *f = fopen(filename, "r"); 
+//     FILE *t = fopen(TMP_FILE, "w"); 
+//     if (!f) {
+//         perror("Erreur ouverture fichier csv source");
+//         return;
+//     }  
 
-    char line[256];
-    fgets(line, sizeof(line), f); // skip header "trofel"
-    fprintf(t, "%s", line);
+//     char line[256];
+//     fgets(line, sizeof(line), f); // skip header "trofel"
+//     fprintf(t, "%s", line);
 
-    while (fgets(line, sizeof(line), f)) {
-        int m, a, idx = 0; 
-        char line_copy[256];
-        strcpy(line_copy, line); // Copie pour strtok
-        char *token = strtok(line_copy, ",");
+//     while (fgets(line, sizeof(line), f)) {
+//         int m, a, idx = 0; 
+//         char line_copy[256];
+//         strcpy(line_copy, line); // Copie pour strtok
+//         char *token = strtok(line_copy, ",");
         
-        while (token && idx < 2) {
-            if (idx == 0) m = atoi(token);
-            else if (idx == 1) a = atoi(token); 
-            token = strtok(NULL, ",");
-            idx++;
-        }
-        if (m != mois || a != annee) fprintf(t, "%s", line); 
-        }
+//         while (token && idx < 2) {
+//             if (idx == 0) m = atoi(token);
+//             else if (idx == 1) a = atoi(token); 
+//             token = strtok(NULL, ",");
+//             idx++;
+//         }
+//         if (m != mois || a != annee) fprintf(t, "%s", line); 
+//         }
 
-    fclose(f); 
-    fclose(t); 
+//     fclose(f); 
+//     fclose(t);
 
-    int sleeper = 5000;
-
-    printf(" Suppression de %s... ", filename); 
-    Sleep(sleeper); 
-
-    remove(filename); 
-
-    printf(" Fichier supprime\n"); 
-    printf(" Recreation de %s... ", filename);
-    Sleep(sleeper);
-
-    rename(TMP_FILE, filename); 
-
-    printf(" Fichier recree\n");
-
-    Sleep(sleeper);
-}
+//     remove(filename);  
+//     rename(TMP_FILE, filename); 
+// }
  

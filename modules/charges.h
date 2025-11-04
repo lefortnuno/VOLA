@@ -10,7 +10,6 @@ extern int nb_charges;
 extern int nb_noms_charges;
 
 
-void ensure_charges_fixes_current_month(); 
-void set_charges_fixes();
+void sync_charge_file(); 
 
 #endif

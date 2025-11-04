@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> 
+#include <stdbool.h>
 
 extern float revenus[];
 extern char *noms_revenus[];
@@ -11,7 +12,6 @@ extern int nb_noms_revenus;
 extern int i_epargne;
 
 
-void ensure_revenus_fixes_current_month(); 
-void set_revenus_fixes(); 
+void sync_revenu_file();  
 
 #endif

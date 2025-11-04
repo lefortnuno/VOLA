@@ -5,12 +5,19 @@
 #include <stdlib.h>  
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
  
 
 void reset_data();
 void init_data();
 void read_schema(); 
 void update_schema(); 
-void sync_data_file(const char *filename); 
+// void sync_data_file(const char *filename); 
 
 #endif
