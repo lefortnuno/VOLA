@@ -13,3 +13,7 @@
 # !data/data.csv
 # !data/zelina-data.csv
 # !data/trofel-data.csv
+
+!bin/
+!bin/deploy.sh
+!bin/cmd.txt
