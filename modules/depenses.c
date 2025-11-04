@@ -164,7 +164,7 @@ void afficher_depenses(time_t date_ref) {
             printf("\n  ================================================\n");
             printf("||%-2s 1.Ajouter %-2s", spc, spc);
             printf("||%-2s 3.Total %-2s", spc, spc);
-            printf("||%-2s 00.Quitter %-2s||", spc, spc);
+            printf("||%-2s 0.Quitter %-2s ||", spc, spc);
             printf("\n  ================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
