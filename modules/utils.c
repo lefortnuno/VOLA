@@ -3,7 +3,7 @@
 char *spc = " ";
 
 void ui_ux_design(char *design){
-    for(int i = 0; i < 50; i++){
+    for(int i = 0; i < 47; i++){
         printf("%s", design);
     }
     printf("\n");
