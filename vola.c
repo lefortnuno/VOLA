@@ -47,7 +47,12 @@ int main() {
 
             case 4: 
                 printf("\n\033[3J\033[H\033[2J");
-                update_schema(); 
+                update_revenu(); 
+                break;
+                
+            case 5: 
+                printf("\n\033[3J\033[H\033[2J");
+                update_charge(); 
                 break;
 
             case 0:

@@ -118,7 +118,13 @@ void init_data() {
     }
 }
 
-void update_schema() { 
-    choix_invalide();
+void update_charge() {
+    mise_a_jour();
+    init_data(); 
+}
+
+void update_revenu() { 
+    mise_a_jour();
+    init_data(); 
 }
  

@@ -188,7 +188,7 @@ void afficher_depenses(time_t date_ref) {
             case 8: date_ref = date_now;  break;  
             case 9: date_ref += 7 * 24 * 60 * 60; break;
             
-            case 6: break; // Pour Aller dans le menu 
+            case 6: choix_semaine = 4; break; // Pour Aller dans le menu 
             case 1: choix_semaine = 4; add_depense(); break; 
             case 3: 
                 printf("\n\033[3J\033[H\033[2J");
@@ -206,4 +206,10 @@ void afficher_depenses(time_t date_ref) {
 
         } 
     } while (choix_semaine != 4);
+}
+
+void creation_depense_file(){ 
+    FILE *f = fopen(DEPENSES_FILE, "a");
+    fclose(f);
+    return;
 }

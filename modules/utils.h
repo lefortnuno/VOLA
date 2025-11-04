@@ -28,5 +28,6 @@ void get_current_month_year(int *mois, int *annee);
 int get_week_number(const char *date_str);
 void choix_invalide();
 void choix_de_quitter();
+void mise_a_jour();
 
 #endif

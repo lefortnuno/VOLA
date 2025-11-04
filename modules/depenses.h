@@ -9,5 +9,6 @@
 
 void add_depense(); 
 void afficher_depenses(time_t date_ref); 
+void creation_depense_file();
 
 #endif

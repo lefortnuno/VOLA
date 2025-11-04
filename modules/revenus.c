@@ -23,7 +23,11 @@ void sync_revenu_file() {
         // Écrire l'en-tête avec une boucle
         fprintf(f, "mois,annee,%s", noms_revenus[0]);
         for (int i = 1; i < nb_noms_revenus; i++) {
-            fprintf(f, ",%s", noms_revenus[i]);
+            fprintf(f, ",%s", noms_revenus[i]); 
+        }
+        fprintf(f, "\n%d,%d", mois, annee);
+        for (int i = 0; i < nb_revenus; i++) {
+            fprintf(f, ",%.0f", revenus[i]); 
         }
         fprintf(f, "\n");
         

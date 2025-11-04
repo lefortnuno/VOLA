@@ -12,11 +12,12 @@
 #else
 #include <unistd.h>
 #endif
- 
+  
 
 void reset_data();
 void init_data();
 void read_schema(); 
-void update_schema();  
+void update_charge();
+void update_revenu();
 
 #endif

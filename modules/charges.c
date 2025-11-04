@@ -25,6 +25,10 @@ void sync_charge_file() {
         for (int i = 1; i < nb_noms_charges; i++) {
             fprintf(f, ",%s", noms_charges[i]);
         }
+        fprintf(f, "\n%d,%d", mois, annee);
+        for (int i = 0; i < nb_charges; i++) {
+            fprintf(f, ",%.0f", charges[i]); 
+        }
         fprintf(f, "\n");
         
         fclose(f);  

@@ -12,6 +12,7 @@ void afficher_bilan() {
     printf("\033[3J\033[H\033[2J");    
     sync_charge_file();
     sync_revenu_file(); 
+    creation_depense_file();
     get_current_month_year(&mois, &annee);
 
     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
@@ -169,17 +170,14 @@ double get_reste_general_precedent() {
     FILE *d = fopen(DEPENSES_FILE, "r");
     double total_charges = 0.0, total_revenus = 0.0, total_depenses = 0.0;
 
-    if (!f) {
-        printf("❌ Impossible d'ouvrir %s\n", CHARGES_FIXES_FILE);
+    if (!f) { 
         return 0.0;
     }
-    if (!r) {
-        printf("❌ Impossible d'ouvrir %s\n", REVENUS_FIXES_FILE);
+    if (!r) { 
         fclose(f);
         return 0.0;
     }
-    if (!d) {
-        printf("❌ Impossible d'ouvrir %s\n", DEPENSES_FILE);
+    if (!d) { 
         fclose(f);
         fclose(r);
         return 0.0;

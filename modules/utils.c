@@ -69,3 +69,13 @@ void choix_de_quitter(){
     printf("  ===========================================\n\n");
     printf("\033[0m"); // réinitialise la couleur
 }
+
+void mise_a_jour(){  
+    printf("\033[3J\033[H\033[2J");
+    printf("\033[1;32m"); // vert vif
+    printf("\n  ===========================================\n");
+    printf("|| Fonctionnalite en cours de developpement! ||\n"); 
+    printf("||           Patientez un peu :)             ||\n");
+    printf("  ===========================================\n\n");
+    printf("\033[0m"); // réinitialise la couleur
+}
