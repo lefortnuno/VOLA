@@ -15,5 +15,4 @@
 # !data/trofel-data.csv
 
 !bin/
-!bin/deploy.sh
-!bin/cmd.txt
+!bin/deploy 
