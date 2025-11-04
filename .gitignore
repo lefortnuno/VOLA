@@ -2,13 +2,8 @@
 *
 
 # Sauf ces fichiers
-!.gitignore
-!vola.c  
-!vola
-!Makefile
-!README.md
-!modules/
-!modules/*.c 
-!modules/*.h   
+!.gitignore 
+!vola 
+!README.md 
 !data/
 !data/data.csv 
