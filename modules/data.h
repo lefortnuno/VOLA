@@ -17,7 +17,6 @@
 void reset_data();
 void init_data();
 void read_schema(); 
-void update_schema(); 
-// void sync_data_file(const char *filename); 
+void update_schema();  
 
 #endif
