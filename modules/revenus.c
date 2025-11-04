@@ -27,7 +27,7 @@ void sync_revenu_file() {
         }
         fprintf(f, "\n%d,%d", mois, annee);
         for (int i = 0; i < nb_revenus; i++) {
-            fprintf(f, ",%.0f", revenus[i]); 
+            fprintf(f, ",%.2f", revenus[i]); 
         }
         fprintf(f, "\n");
         
@@ -49,7 +49,7 @@ void sync_revenu_file() {
             found = true;  
             fprintf(t, "%d,%d", mois, annee);  
             for (int i = 0; i < nb_revenus; i++) {
-                fprintf(t, ",%.0f", revenus[i]); 
+                fprintf(t, ",%.2f", revenus[i]); 
             }
             fprintf(t, "\n");  
         } else {
@@ -60,7 +60,7 @@ void sync_revenu_file() {
     if (!found) {
         fprintf(t, "%d,%d", mois, annee);  
         for (int i = 0; i < nb_revenus; i++) {
-            fprintf(t, ",%.0f", revenus[i]); 
+            fprintf(t, ",%.2f", revenus[i]); 
         }
         fprintf(t, "\n");  
     }

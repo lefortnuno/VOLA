@@ -90,7 +90,7 @@ void read_schema() {
             // valeurs des revenus
             char *token = strtok(line, ","); 
             while (token && nb_revenus < MAX_ITEMS) { 
-                if(i_epargne != 69 && i_epargne == nb_revenus) fprintf(t, nb_revenus == 0 ? "%.0f" : ",%.0f", epargne_precedente);
+                if(i_epargne != 69 && i_epargne == nb_revenus) fprintf(t, nb_revenus == 0 ? "%.2f" : ",%.2f", epargne_precedente);
                 else fprintf(t, nb_revenus == 0 ? "%s" : ",%s", token);
 
                 if(i_epargne != 69 && i_epargne == nb_revenus) revenus[nb_revenus] = epargne_precedente;
