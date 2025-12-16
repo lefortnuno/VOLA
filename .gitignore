@@ -9,6 +9,8 @@
 !modules/
 !modules/*.c 
 !modules/*.h   
+!data/   
+!data/recup.csv    
 # !data/
 # !data/data.csv
 # !data/zelina-data.csv
