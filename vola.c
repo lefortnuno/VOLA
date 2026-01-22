@@ -1,6 +1,7 @@
 #include "modules/bilan.h" 
 #include "modules/data.h" 
 #include "modules/depenses.h" 
+#include "modules/casuel.h" 
 #include "modules/charges.h" 
 #include "modules/utils.h"  
 
@@ -18,8 +19,10 @@ int main() {
             printf("|| 3.Total "); 
             printf("|| 0.Quitter ||");
             printf("\n  =================================================\n");
-            printf("||%-6s 4.UpRevenus %-6s", spc, spc);
-            printf("||%-4s 5.UpCharges %-5s||", spc, spc);
+            // printf("||%-6s 4.UpRevenus %-6s", spc, spc);
+            // printf("||%-4s 5.UpCharges %-5s||", spc, spc);
+            printf("||%-6s 4.Casuel-A  %-6s", spc, spc);
+            printf("||%-4s 5.Casuel-H  %-5s||", spc, spc);
             printf("\n  =================================================\n");
             printf("|| Choix: "); 
             fflush(stdout); 
@@ -46,13 +49,15 @@ int main() {
                 break;
 
             case 4: 
-                printf("\n\033[3J\033[H\033[2J");
-                update_revenu(); 
+                add_casuel();  
+                // printf("\n\033[3J\033[H\033[2J");
+                // update_revenu(); 
                 break;
                 
             case 5: 
-                printf("\n\033[3J\033[H\033[2J");
-                update_charge(); 
+                afficher_casuels(maintenant);
+                // printf("\n\033[3J\033[H\033[2J");
+                // update_charge(); 
                 break;
 
             case 0:

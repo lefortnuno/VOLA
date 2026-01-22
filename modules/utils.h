@@ -6,6 +6,7 @@
 
 #define DATA_FILE "data/data.csv"
 #define DEPENSES_FILE "data/depenses.csv"
+#define CASUEL_FILE "data/casuel.csv"
 #define CHARGES_FIXES_FILE "data/charges_fixes.csv"
 #define REVENUS_FIXES_FILE "data/revenu_fixes.csv"
 #define REVENUS_FILE "data/revenu.csv" 
@@ -21,6 +22,7 @@ extern char *spc;
 
 
 void ui_ux_design(char *design);
+void ui_ux_design_debEmpty(int n, char *design);
 void get_current_date(char *date_str, size_t size);
 void get_current_time(char *time_str, size_t size);
 void format_date_affichage(const char *date_in, char *date_out, size_t size);

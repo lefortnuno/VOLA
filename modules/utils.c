@@ -9,6 +9,16 @@ void ui_ux_design(char *design){
     printf("\n");
 }
 
+void ui_ux_design_debEmpty(int n, char *design){
+    for(int i = 0; i < n; i++){
+        printf(" ");
+    }
+    for(int i = 0; i < 47-n; i++){
+        printf("%s", design);
+    }
+    printf("\n");
+}
+
 void get_current_date(char *date_str, size_t size) {
     time_t now = time(NULL);
     struct tm *t = localtime(&now);
