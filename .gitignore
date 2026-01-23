@@ -18,3 +18,6 @@
 
 !bin/
 !bin/deploy 
+
+!ui/
+!ui/main_ui.c 
