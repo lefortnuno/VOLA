@@ -286,7 +286,8 @@ double get_reste_general_precedent() {
     FILE *f = fopen(CHARGES_FIXES_FILE, "r");
     FILE *r = fopen(REVENUS_FIXES_FILE, "r");
     FILE *d = fopen(DEPENSES_FILE, "r");
-    double total_charges = 0.0, total_revenus = 0.0, total_depenses = 0.0;
+    FILE *c = fopen(CASUEL_FILE, "r");
+    double total_charges = 0.0, total_revenus = 0.0, total_depenses = 0.0,  total_casuels = 0.0;
 
     if (!f) { 
         return 0.0;
@@ -298,6 +299,12 @@ double get_reste_general_precedent() {
     if (!d) { 
         fclose(f);
         fclose(r);
+        return 0.0;
+    }
+    if (!c) { 
+        fclose(f);
+        fclose(r);
+        fclose(d);
         return 0.0;
     }
 
@@ -357,7 +364,23 @@ double get_reste_general_precedent() {
     }
     fclose(d);
 
-    reste_general = total_revenus - total_charges - total_depenses;
+    // Lecture des CASUELS
+    while (fgets(line, sizeof(line), c)) { 
+        int m, a;
+        char *token = strtok(line, ",");
+        
+        if (token) {
+            sscanf(token, "%d-%d", &a, &m);
+            token = strtok(NULL, ",");  
+            if (token) {
+                token = strtok(NULL, ",");  
+                if (token && m == mois && a == annee) total_casuels += atof(token); 
+            }  
+        }
+    }
+    fclose(d);
+
+    reste_general = total_revenus +total_casuels - total_charges - total_depenses;
     return reste_general;
 }
  
