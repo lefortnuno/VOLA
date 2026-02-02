@@ -378,7 +378,7 @@ double get_reste_general_precedent() {
             }  
         }
     }
-    fclose(d);
+    fclose(c);
 
     reste_general = total_revenus +total_casuels - total_charges - total_depenses;
     return reste_general;
