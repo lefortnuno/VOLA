@@ -1,0 +1,1 @@
+cd VOLA && git checkout dev && git pull origin dev && make && rm ../vola && mv vola ../vola && git checkout main && rm vola && cd .. && cp vola VOLA/ && cd VOLA && git add vola && git commit -m "fix: Nombre a virgule pour Zelina" && git push origin main && cd ..

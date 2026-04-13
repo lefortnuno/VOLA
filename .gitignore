@@ -2,8 +2,19 @@
 *
 
 # Sauf ces fichiers
-!.gitignore 
-!vola 
-!README.md 
-!data/
-!data/data.csv 
+!.gitignore
+!vola.c  
+!Makefile
+!README.md
+!modules/
+!modules/*.c 
+!modules/*.h   
+!data/       
+!data/data.csv
+!data/casuel.csv 
+!data/charges_fixes.csv 
+!data/depenses.csv 
+!data/revenu_fixes.csv 
+
+!bin/
+!bin/deploy 
