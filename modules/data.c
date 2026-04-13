@@ -349,7 +349,7 @@ void supprimer_charge_fixe() {
 
     printf("\033[1;31m");
     ui_ux_design("=");
-    printf("|| Charge Fixe '%s' supprimee.\n", saved_nom);
+    printf("|| Charge Fixe '%s' supprimEe.\n", saved_nom);
     ui_ux_design("=");
     printf("\033[0m");
 }
@@ -375,7 +375,7 @@ void add_revenu_fixe() {
     printf("|| Nom : "); fflush(stdout);
     if (!fgets(nom, sizeof(nom), stdin)) return;
     nom[strcspn(nom, "\n")] = 0;
-    if (!strlen(nom)) { donnee_vide(); return; }
+    if (!strlen(nom)) { libelle_vide(); return; }
 
     printf("|| Valeur [0.00 dhs] : "); fflush(stdout);
     if (!fgets(val_str, sizeof(val_str), stdin)) return;
@@ -470,7 +470,7 @@ void supprimer_revenu_fixe() {
 
     printf("\033[1;31m");
     ui_ux_design("=");
-    printf("|| Revenu Fixe '%s' supprime.\n", saved_nom);
+    printf("|| Revenu Fixe '%s' supprimE.\n", saved_nom);
     ui_ux_design("=");
     printf("\033[0m");
 }

@@ -78,7 +78,7 @@ void choix_invalide(){
 void libelle_vide(){ 
     printf("\033[1;31m"); // rouge vif
     printf("\n  -----------------------------------------\n");
-    printf("||    Libelle vide, Abandon !              ||\n");
+    printf("||    Le champ 'Nom' est obligatoire !     ||\n");
     printf("  -----------------------------------------\n"); 
     printf("\033[0m"); // réinitialise la couleur  
 }
@@ -86,7 +86,7 @@ void libelle_vide(){
 void donnee_vide(){ 
     printf("\033[1;31m"); // rouge vif
     printf("\n  -----------------------------------------\n");
-    printf("||    Donnee Vide, Abandon !               ||\n");
+    printf("||    Fichier de donnees introuvable !     ||\n");
     printf("  -----------------------------------------\n"); 
     printf("\033[0m"); // réinitialise la couleur  
 }
@@ -94,7 +94,7 @@ void donnee_vide(){
 void annuler(){ 
     printf("\033[1;31m"); // rouge vif
     printf("\n  -----------------------------------------\n");
-    printf("||    Annuler !                            ||\n");
+    printf("||    Abandon de l'operation               ||\n");
     printf("  -----------------------------------------\n"); 
     printf("\033[0m"); // réinitialise la couleur  
 }
@@ -104,7 +104,7 @@ void choix_de_quitter(){
     printf("\033[3J\033[H\033[2J");
     printf("\033[1;32m"); // vert vif
     printf("\n  ===========================================\n");
-    printf("||   Merci d avoir utilise le programme !    ||\n"); 
+    printf("||   Merci d'avoir utilise le programme !    ||\n"); 
     printf("||              A bientot :)                 ||\n");
     printf("  ===========================================\n\n");
     printf("\033[0m"); // réinitialise la couleur
