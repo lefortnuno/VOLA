@@ -11,10 +11,10 @@
 !modules/*.h   
 !data/       
 !data/data.csv
-!data/casuel.csv 
-!data/charges_fixes.csv 
-!data/depenses.csv 
-!data/revenu_fixes.csv 
+# !data/casuel.csv 
+# !data/charges_fixes.csv 
+# !data/depenses.csv 
+# !data/revenu_fixes.csv 
 
 !bin/
 !bin/deploy 
