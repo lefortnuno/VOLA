@@ -32,7 +32,9 @@ int main() {
                 while ((c = getchar()) != '\n' && c != EOF);
                 saisie_valide = 0;
             } else {
-                saisie_valide = (choix >= 0 && choix <= 5);
+                saisie_valide = (choix >= 0 && choix <= 5) ||
+                                (choix == 11 || choix == 12 || choix == 13) ||
+                                (choix == 41 || choix == 42 || choix == 43);
             }
             
             if (!saisie_valide) {
@@ -60,9 +62,17 @@ int main() {
                 // update_charge(); 
                 break;
 
+            case 11: add_charge_fixe();    break;
+            case 12: modifier_charge_fixe(); break;
+            case 13: supprimer_charge_fixe(); break;
+
+            case 41: add_revenu_fixe();    break;
+            case 42: modifier_revenu_fixe(); break;
+            case 43: supprimer_revenu_fixe(); break;
+
             case 0:
                 choix_de_quitter();
-                break;  
+                break;
             default:
                 choix_invalide();
                 break;

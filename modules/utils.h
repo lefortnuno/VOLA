@@ -30,6 +30,9 @@ void format_heure_affichage(const char *time_in, char *time_out, size_t size);
 void get_current_month_year(int *mois, int *annee);
 int get_week_number(const char *date_str);
 void choix_invalide();
+void libelle_vide();
+void donnee_vide();
+void annuler();
 void choix_de_quitter();
 void mise_a_jour();
 

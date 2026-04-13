@@ -75,6 +75,30 @@ void choix_invalide(){
     printf("\033[0m"); // réinitialise la couleur  
 }
 
+void libelle_vide(){ 
+    printf("\033[1;31m"); // rouge vif
+    printf("\n  -----------------------------------------\n");
+    printf("||    Libelle vide, Abandon !              ||\n");
+    printf("  -----------------------------------------\n"); 
+    printf("\033[0m"); // réinitialise la couleur  
+}
+
+void donnee_vide(){ 
+    printf("\033[1;31m"); // rouge vif
+    printf("\n  -----------------------------------------\n");
+    printf("||    Donnee Vide, Abandon !               ||\n");
+    printf("  -----------------------------------------\n"); 
+    printf("\033[0m"); // réinitialise la couleur  
+}
+
+void annuler(){ 
+    printf("\033[1;31m"); // rouge vif
+    printf("\n  -----------------------------------------\n");
+    printf("||    Annuler !                            ||\n");
+    printf("  -----------------------------------------\n"); 
+    printf("\033[0m"); // réinitialise la couleur  
+}
+
 void choix_de_quitter(){ 
     choix = 0;
     printf("\033[3J\033[H\033[2J");
